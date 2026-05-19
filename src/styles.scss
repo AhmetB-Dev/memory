@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+}
+
+section {
+  height: 100vh;
+}
+
+button {
+  border: none;
+  background: transparent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+input {
+  cursor: pointer;
+}
+
+.home-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #2f3131;
+  background-image: url(/assets/images/shared/stadia_controllerew.png);
+  background-size: 25%;
+  background-repeat: no-repeat;
+  background-position: 0% 95%;
+
+  p {
+    margin: 0;
+    font-size: clamp(2rem, 4vh, 7rem);
+    color: white;
+  }
+
+  h1 {
+    color: white;
+    font-size: clamp(3rem, 5vh, 8rem);
+  }
+}
+
+.home-screen__play-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 2em 2em;
+  background-color: #f0ea6e;
+}
+
+.setup-screen__summary {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.setup-screen__summary-item {
+  display: flex;
+  background-color: #f6f6f6;
+  align-items: center;
+}
+
+.setup-screen__start-button {
+  background-color: #f0ea6e;
+  padding: 1em;
+}
