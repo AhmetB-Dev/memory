@@ -26,7 +26,7 @@ input {
   align-items: center;
 
   background-color: #2f3131;
-  background-image: url(/assets/images/shared/stadia_controllerew.png);
+  background-image: url(/assets/images/shared/play-controller.webp);
   background-size: 25%;
   background-repeat: no-repeat;
   background-position: 0% 95%;
@@ -52,6 +52,44 @@ input {
   background-color: #f0ea6e;
 }
 
+.setup-screen {
+  padding: 5em;
+}
+
+.setup-screen__header {
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vh, 7rem);
+  }
+
+  img {
+    position: relative;
+    right: 1em;
+  }
+}
+
+.setup-group {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 1em;
+}
+
+.setup-group__title {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+}
+
+.setup-group__content {
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin-bottom: 0.5em;
+  }
+}
+
 .setup-screen__summary {
   display: flex;
   justify-content: flex-end;
@@ -61,6 +99,12 @@ input {
   display: flex;
   background-color: #f6f6f6;
   align-items: center;
+  padding: 1em 1em;
+}
+
+.setup-screen__bg-color-decor {
+  background-color: #f6f6f6;
+  width: 1.2em;
 }
 
 .setup-screen__start-button {

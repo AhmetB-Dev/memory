@@ -1,4 +1,5 @@
 import { GAME_THEMES } from "../data/themes";
+import { renderResultScreen } from "./result.screen";
 
 export type ThemeKey = "coding" | "gaming" | "da-projects" | "foods";
 export type PlayerKey = "blue" | "orange";
@@ -19,8 +20,23 @@ type MemoryCard = {
   isMatched: boolean;
 };
 
+type Player = {
+  id: PlayerKey;
+  name: string;
+  score: number;
+};
+
 export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
+  const TURN_TIME_SECONDS = 20;
+
   const cards = createMemoryCards(setup);
+  const players = createPlayers(setup.player);
+
+  let currentPlayerIndex = 0;
+  let openCards: MemoryCard[] = [];
+  let isBoardLocked = false;
+  let timeLeft = TURN_TIME_SECONDS;
+  let timerId: number | undefined;
 
   app.innerHTML = `
     <section class="game-screen">
@@ -37,13 +53,23 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
 
       <div class="game-screen__info">
         <div class="game-screen__info-item">
-          <span>Theme</span>
-          <strong>${setup.theme}</strong>
+          <span>Current player</span>
+          <strong id="current-player">${getCurrentPlayer().name}</strong>
         </div>
 
         <div class="game-screen__info-item">
-          <span>Player</span>
-          <strong>${setup.player}</strong>
+          <span>Time</span>
+          <strong id="turn-timer">${TURN_TIME_SECONDS}</strong>
+        </div>
+
+        <div class="game-screen__info-item">
+          <span>Blue score</span>
+          <strong id="blue-score">0</strong>
+        </div>
+
+        <div class="game-screen__info-item">
+          <span>Orange score</span>
+          <strong id="orange-score">0</strong>
         </div>
 
         <div class="game-screen__info-item">
@@ -57,9 +83,9 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
           .map((card) => {
             return `
               <button class="memory-card" type="button" data-card-id="${card.id}">
-                <img 
-                  src="${card.backImage}" 
-                  alt="Memory card back" 
+                <img
+                  src="${card.backImage}"
+                  alt="Memory card back"
                   class="memory-card__image"
                 />
               </button>
@@ -78,36 +104,302 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
   }
 
   exitButton.addEventListener("click", () => {
+    stopTimer();
     console.log("Exit game clicked");
   });
 
   cardButtons.forEach((cardButton) => {
     cardButton.addEventListener("click", () => {
       const cardId = Number(cardButton.dataset.cardId);
-
-      const clickedCard = cards.find((card) => card.id === cardId);
-
-      if (!clickedCard) {
-        throw new Error("Clicked card not found");
-      }
-
-      clickedCard.isFlipped = true;
-
-      const image = cardButton.querySelector<HTMLImageElement>(".memory-card__image");
-
-      if (!image) {
-        throw new Error("Card image not found");
-      }
-
-      image.src = clickedCard.image;
-
-      console.log("Clicked card:", clickedCard);
+      handleCardClick(cardId);
     });
   });
+
+  startTimer();
+
+  function handleCardClick(cardId: number) {
+    if (isBoardLocked) {
+      return;
+    }
+
+    const clickedCard = cards.find((card) => {
+      return card.id === cardId;
+    });
+
+    if (!clickedCard) {
+      throw new Error("Clicked card not found");
+    }
+
+    if (clickedCard.isFlipped || clickedCard.isMatched) {
+      return;
+    }
+
+    flipCard(clickedCard);
+    openCards.push(clickedCard);
+
+    if (openCards.length === 2) {
+      checkOpenCards();
+    }
+  }
+
+  function flipCard(card: MemoryCard) {
+    card.isFlipped = true;
+
+    const cardButton = getCardButton(card.id);
+    const image = cardButton.querySelector<HTMLImageElement>(".memory-card__image");
+
+    if (!image) {
+      throw new Error("Card image not found");
+    }
+
+    image.src = card.image;
+    image.alt = "Memory card front";
+  }
+
+  function closeCard(card: MemoryCard) {
+    card.isFlipped = false;
+
+    const cardButton = getCardButton(card.id);
+    const image = cardButton.querySelector<HTMLImageElement>(".memory-card__image");
+
+    if (!image) {
+      throw new Error("Card image not found");
+    }
+
+    image.src = card.backImage;
+    image.alt = "Memory card back";
+  }
+
+  function checkOpenCards() {
+    isBoardLocked = true;
+    stopTimer();
+
+    const [firstCard, secondCard] = openCards;
+
+    if (firstCard.pairId === secondCard.pairId) {
+      handleMatch(firstCard, secondCard);
+      return;
+    }
+
+    handleNoMatch(firstCard, secondCard);
+  }
+
+  function handleMatch(firstCard: MemoryCard, secondCard: MemoryCard) {
+    firstCard.isMatched = true;
+    secondCard.isMatched = true;
+
+    getCurrentPlayer().score += 1;
+
+    disableMatchedCard(firstCard);
+    disableMatchedCard(secondCard);
+
+    openCards = [];
+    isBoardLocked = false;
+
+    updateScoreBoard();
+
+    const isGameFinished = checkGameEnd();
+
+    if (!isGameFinished) {
+      resetTimer();
+    }
+
+    console.log("Match found. Current player stays:", getCurrentPlayer());
+  }
+
+  function handleNoMatch(firstCard: MemoryCard, secondCard: MemoryCard) {
+    console.log("No match. Player will change.");
+
+    setTimeout(() => {
+      closeCard(firstCard);
+      closeCard(secondCard);
+
+      openCards = [];
+      switchPlayer();
+      updateScoreBoard();
+
+      isBoardLocked = false;
+      resetTimer();
+    }, 1000);
+  }
+
+  function startTimer() {
+    stopTimer();
+
+    timerId = window.setInterval(() => {
+      timeLeft -= 1;
+      updateTimerDisplay();
+
+      if (timeLeft <= 0) {
+        handleTimeExpired();
+      }
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if (timerId === undefined) {
+      return;
+    }
+
+    clearInterval(timerId);
+    timerId = undefined;
+  }
+
+  function resetTimer() {
+    stopTimer();
+    timeLeft = TURN_TIME_SECONDS;
+    updateTimerDisplay();
+    startTimer();
+  }
+
+  function updateTimerDisplay() {
+    const timerElement = app.querySelector<HTMLElement>("#turn-timer");
+
+    if (!timerElement) {
+      throw new Error("Timer element not found");
+    }
+
+    timerElement.textContent = String(timeLeft);
+  }
+
+  function handleTimeExpired() {
+    stopTimer();
+
+    if (isBoardLocked) {
+      return;
+    }
+
+    isBoardLocked = true;
+
+    if (openCards.length === 1) {
+      closeCard(openCards[0]);
+    }
+
+    openCards = [];
+
+    switchPlayer();
+    updateScoreBoard();
+
+    isBoardLocked = false;
+    resetTimer();
+
+    console.log("Time expired. Player changed:", getCurrentPlayer());
+  }
+
+  function switchPlayer() {
+    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+  }
+
+  function getCurrentPlayer() {
+    return players[currentPlayerIndex];
+  }
+
+  function updateScoreBoard() {
+    const currentPlayerElement = app.querySelector<HTMLElement>("#current-player");
+    const blueScoreElement = app.querySelector<HTMLElement>("#blue-score");
+    const orangeScoreElement = app.querySelector<HTMLElement>("#orange-score");
+
+    if (!currentPlayerElement || !blueScoreElement || !orangeScoreElement) {
+      throw new Error("Score board elements not found");
+    }
+
+    const bluePlayer = players.find((player) => {
+      return player.id === "blue";
+    });
+
+    const orangePlayer = players.find((player) => {
+      return player.id === "orange";
+    });
+
+    if (!bluePlayer || !orangePlayer) {
+      throw new Error("Players not found");
+    }
+
+    currentPlayerElement.textContent = getCurrentPlayer().name;
+    blueScoreElement.textContent = String(bluePlayer.score);
+    orangeScoreElement.textContent = String(orangePlayer.score);
+  }
+
+  function checkGameEnd(): boolean {
+    const allCardsMatched = cards.every((card) => {
+      return card.isMatched;
+    });
+
+    if (!allCardsMatched) {
+      return false;
+    }
+
+    stopTimer();
+
+    const highestScore = Math.max(
+      ...players.map((player) => {
+        return player.score;
+      }),
+    );
+
+    const winners = players.filter((player) => {
+      return player.score === highestScore;
+    });
+
+    renderResultScreen(
+      app,
+      {
+        players,
+        winners,
+        isTie: winners.length > 1,
+      },
+      {
+        onRestart: () => {
+          renderGameScreen(app, setup);
+        },
+      },
+    );
+
+    return true;
+  }
+
+  function disableMatchedCard(card: MemoryCard) {
+    const cardButton = getCardButton(card.id);
+
+    cardButton.disabled = true;
+    cardButton.classList.add("is-matched");
+  }
+
+  function getCardButton(cardId: number) {
+    const cardButton = app.querySelector<HTMLButtonElement>(`.memory-card[data-card-id="${cardId}"]`);
+
+    if (!cardButton) {
+      throw new Error(`Card button not found: ${cardId}`);
+    }
+
+    return cardButton;
+  }
+}
+
+function createPlayers(startPlayer: PlayerKey): Player[] {
+  const bluePlayer: Player = {
+    id: "blue",
+    name: "Blue",
+    score: 0,
+  };
+
+  const orangePlayer: Player = {
+    id: "orange",
+    name: "Orange",
+    score: 0,
+  };
+
+  if (startPlayer === "blue") {
+    return [bluePlayer, orangePlayer];
+  }
+
+  return [orangePlayer, bluePlayer];
 }
 
 function createMemoryCards(setup: GameSetup): MemoryCard[] {
-  const selectedTheme = GAME_THEMES.find((theme) => theme.id === setup.theme);
+  const selectedTheme = GAME_THEMES.find((theme) => {
+    return theme.id === setup.theme;
+  });
 
   if (!selectedTheme) {
     throw new Error(`Theme not found: ${setup.theme}`);
@@ -150,5 +442,7 @@ function createMemoryCards(setup: GameSetup): MemoryCard[] {
 }
 
 function shuffleCards(cards: MemoryCard[]): MemoryCard[] {
-  return [...cards].sort(() => Math.random() - 0.5);
+  return [...cards].sort(() => {
+    return Math.random() - 0.5;
+  });
 }

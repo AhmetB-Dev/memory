@@ -11,75 +11,91 @@ export function renderSetupScreen(app: HTMLDivElement) {
   const setupState: SetupState = {};
 
   app.innerHTML = `
-    <section class="setup-screen">
-      <button class="setup-screen__back-button" type="button" id="back-button">
-        Back
-      </button>
+ <section class="setup-screen">
+      <div class="setup-screen__header">
+        <h1 class="setup-screen__title">Settings</h1>
+        <img src="/assets/images/shared/arrow-line-long.svg" alt="" />
+      </div>
+      <button class="setup-screen__back-button" type="button" id="back-button">Back</button>
 
       <div class="setup-screen__layout">
         <div class="setup-screen__options">
-
+          <!-- Game themes -->
           <div class="setup-group">
-            <h2 class="setup-group__title">Game themes</h2>
+            <div>
+              <img src="/assets/images/shared/palette.svg" alt="" />
+            </div>
 
-            <label class="setup-option">
-              <input type="radio" name="theme" value="coding" />
-              <span>Code vibes theme</span>
-            </label>
+            <div class="setup-group__content">
+              <h2>Game themes</h2>
 
-            <label class="setup-option">
-              <input type="radio" name="theme" value="gaming" />
-              <span>Gaming theme</span>
-            </label>
+              <label class="setup-option">
+                <input type="radio" name="theme" value="coding" />
+                <span>Code vibes theme</span>
+              </label>
 
-            <label class="setup-option">
-              <input type="radio" name="theme" value="da-projects" />
-              <span>DA Projects theme</span>
-            </label>
+              <label class="setup-option">
+                <input type="radio" name="theme" value="gaming" />
+                <span>Gaming theme</span>
+              </label>
 
-            <label class="setup-option">
-              <input type="radio" name="theme" value="foods" />
-              <span>Foods theme</span>
-            </label>
+              <label class="setup-option">
+                <input type="radio" name="theme" value="da-projects" />
+                <span>DA Projects theme</span>
+              </label>
+
+              <label class="setup-option">
+                <input type="radio" name="theme" value="foods" />
+                <span>Foods theme</span>
+              </label>
+            </div>
           </div>
 
+          <!-- Choose player -->
           <div class="setup-group">
-            <h2 class="setup-group__title">Choose player</h2>
+            <div>
+              <img src="/assets/images/shared/chess_pawn.svg" alt="" />
+            </div>
 
-            <label class="setup-option">
-              <input type="radio" name="player" value="blue" />
-              <span>Blue</span>
-            </label>
+            <div class="setup-group__content">
+              <h2>Choose player</h2>
 
-            <label class="setup-option">
-              <input type="radio" name="player" value="orange" />
-              <span>Orange</span>
-            </label>
+              <label class="setup-option">
+                <input type="radio" name="player" value="blue" />
+                <span>Blue</span>
+              </label>
+
+              <label class="setup-option">
+                <input type="radio" name="player" value="orange" />
+                <span>Orange</span>
+              </label>
+            </div>
           </div>
 
+          <!-- Board size -->
           <div class="setup-group">
-            <h2 class="setup-group__title">Board size</h2>
+            <div>
+              <img src="/assets/images/shared/card.svg" alt="" />
+            </div>
 
-            <label class="setup-option">
-              <input type="radio" name="boardSize" value="16" />
-              <span>16 cards</span>
-            </label>
+            <div class="setup-group__content">
+              <h2>Board size</h2>
 
-            <label class="setup-option">
-              <input type="radio" name="boardSize" value="24" />
-              <span>24 cards</span>
-            </label>
+              <label class="setup-option">
+                <input type="radio" name="boardSize" value="16" />
+                <span>16 cards</span>
+              </label>
 
-            <label class="setup-option">
-              <input type="radio" name="boardSize" value="36" />
-              <span>36 cards</span>
-            </label>
-          </div>
-        </div>
+              <label class="setup-option">
+                <input type="radio" name="boardSize" value="24" />
+                <span>24 cards</span>
+              </label>
 
-        <div class="setup-screen__preview">
-          <div class="setup-screen__preview-box">
-            <p>Preview kommt später hier rein</p>
+              <label class="setup-option">
+                <input type="radio" name="boardSize" value="36" />
+                <span>36 cards</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -89,24 +105,20 @@ export function renderSetupScreen(app: HTMLDivElement) {
           <strong id="summary-theme">Game theme</strong>
         </div>
 
-        <img src="/assets/images/shared/Line 6.svg" alt="" />
+        <img  src="/assets/images/shared/summary-divider.svg" alt="" />
 
         <div class="setup-screen__summary-item">
           <strong id="summary-player">Player</strong>
         </div>
 
-        <img src="/assets/images/shared/Line 6.svg" alt="" />
+        <img class="setup-screen__bg-color-decor" src="/assets/images/shared/summary-divider.svg" alt="" />
 
         <div class="setup-screen__summary-item">
           <strong id="summary-board-size">Board size</strong>
         </div>
 
         <button class="setup-screen__start-button" type="button" id="start-button">
-          <img 
-            src="/assets/images/shared/smart_display.svg" 
-            alt="" 
-            class="setup-screen__start-icon" 
-          />
+          <img src="/assets/images/shared/start-icon.svg" alt="" class="setup-screen__start-icon" />
           <span>Start</span>
         </button>
       </div>
