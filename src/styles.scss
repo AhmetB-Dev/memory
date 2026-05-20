@@ -111,3 +111,26 @@ input {
   background-color: #f0ea6e;
   padding: 1em;
 }
+
+.setup-screen__layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.setup-screen__theme-preview {
+  min-width: 280px;
+}
+
+.setup-screen__theme-preview-card {
+  background: #f6f6f6;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+.setup-screen__theme-preview-image {
+  width: 100%;
+  max-width: 260px;
+  display: block;
+  margin-bottom: 1rem;
+}

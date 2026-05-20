@@ -1,4 +1,4 @@
-import { renderHomeScreen } from "./home.screen";
+import { GAME_THEMES } from "../data/themes";
 import { renderGameScreen, type BoardSize, type PlayerKey, type ThemeKey } from "./game.screen";
 
 type SetupState = {
@@ -7,16 +7,19 @@ type SetupState = {
   boardSize?: BoardSize;
 };
 
+const DECORATIVE_START_THEME: ThemeKey = "coding";
+
 export function renderSetupScreen(app: HTMLDivElement) {
   const setupState: SetupState = {};
 
+  const decorativeTheme = getThemeById(DECORATIVE_START_THEME);
+
   app.innerHTML = `
- <section class="setup-screen">
+    <section class="setup-screen">
       <div class="setup-screen__header">
         <h1 class="setup-screen__title">Settings</h1>
         <img src="/assets/images/shared/arrow-line-long.svg" alt="" />
       </div>
-      <button class="setup-screen__back-button" type="button" id="back-button">Back</button>
 
       <div class="setup-screen__layout">
         <div class="setup-screen__options">
@@ -98,6 +101,17 @@ export function renderSetupScreen(app: HTMLDivElement) {
             </div>
           </div>
         </div>
+
+        <div class="setup-screen__theme-preview">
+          <div class="setup-screen__theme-preview-card">
+            <img
+              id="theme-preview-image"
+              class="setup-screen__theme-preview-image"
+              src="${decorativeTheme.previewImage}"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
 
       <div class="setup-screen__summary">
@@ -105,7 +119,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
           <strong id="summary-theme">Game theme</strong>
         </div>
 
-        <img  src="/assets/images/shared/summary-divider.svg" alt="" />
+        <img src="/assets/images/shared/summary-divider.svg" alt="" />
 
         <div class="setup-screen__summary-item">
           <strong id="summary-player">Player</strong>
@@ -125,28 +139,27 @@ export function renderSetupScreen(app: HTMLDivElement) {
     </section>
   `;
 
-  const backButton = app.querySelector<HTMLButtonElement>("#back-button");
-  const startButton = app.querySelector<HTMLButtonElement>("#start-button");
+  function getRequiredElement<T extends HTMLElement>(selector: string): T {
+    const element = app.querySelector<T>(selector);
 
-  const summaryTheme = app.querySelector<HTMLElement>("#summary-theme");
-  const summaryPlayer = app.querySelector<HTMLElement>("#summary-player");
-  const summaryBoardSize = app.querySelector<HTMLElement>("#summary-board-size");
+    if (!element) {
+      throw new Error(`Element not found: ${selector}`);
+    }
+
+    return element;
+  }
+
+  const startButton = getRequiredElement<HTMLButtonElement>("#start-button");
+
+  const summaryTheme = getRequiredElement<HTMLElement>("#summary-theme");
+  const summaryPlayer = getRequiredElement<HTMLElement>("#summary-player");
+  const summaryBoardSize = getRequiredElement<HTMLElement>("#summary-board-size");
+
+  const themePreviewImage = getRequiredElement<HTMLImageElement>("#theme-preview-image");
 
   const themeInputs = app.querySelectorAll<HTMLInputElement>('input[name="theme"]');
   const playerInputs = app.querySelectorAll<HTMLInputElement>('input[name="player"]');
   const boardSizeInputs = app.querySelectorAll<HTMLInputElement>('input[name="boardSize"]');
-
-  if (!backButton) {
-    throw new Error("Back button not found");
-  }
-
-  if (!startButton) {
-    throw new Error("Start button not found");
-  }
-
-  if (!summaryTheme || !summaryPlayer || !summaryBoardSize) {
-    throw new Error("Summary elements not found");
-  }
 
   function updateSummary() {
     const themeLabels: Record<ThemeKey, string> = {
@@ -168,14 +181,23 @@ export function renderSetupScreen(app: HTMLDivElement) {
     summaryBoardSize.textContent = setupState.boardSize ? `${setupState.boardSize} cards` : "Board size";
   }
 
-  backButton.addEventListener("click", () => {
-    renderHomeScreen(app);
-  });
+  function updateThemePreview() {
+    if (!setupState.theme) {
+      return;
+    }
+
+    const selectedTheme = getThemeById(setupState.theme);
+
+    themePreviewImage.src = selectedTheme.previewImage;
+    themePreviewImage.alt = `${selectedTheme.name} preview`;
+  }
 
   themeInputs.forEach((input) => {
     input.addEventListener("change", () => {
       setupState.theme = input.value as ThemeKey;
+
       updateSummary();
+      updateThemePreview();
 
       console.log("Selected theme:", setupState.theme);
     });
@@ -184,6 +206,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
   playerInputs.forEach((input) => {
     input.addEventListener("change", () => {
       setupState.player = input.value as PlayerKey;
+
       updateSummary();
 
       console.log("Selected player:", setupState.player);
@@ -193,6 +216,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
   boardSizeInputs.forEach((input) => {
     input.addEventListener("change", () => {
       setupState.boardSize = Number(input.value) as BoardSize;
+
       updateSummary();
 
       console.log("Selected board size:", setupState.boardSize);
@@ -211,4 +235,16 @@ export function renderSetupScreen(app: HTMLDivElement) {
       boardSize: setupState.boardSize,
     });
   });
+}
+
+function getThemeById(themeId: ThemeKey) {
+  const selectedTheme = GAME_THEMES.find((theme) => {
+    return theme.id === themeId;
+  });
+
+  if (!selectedTheme) {
+    throw new Error(`Theme not found: ${themeId}`);
+  }
+
+  return selectedTheme;
 }

@@ -9,7 +9,7 @@ export function renderHomeScreen(app: HTMLDivElement) {
 
       <button class="home-screen__play-button" type="button" id="play-button">
         <img 
-          src="/assets/images/shared/stadia_controllerew.svg" 
+          src="/assets/images/shared/play-controller.svg"" 
           alt="" 
           class="home-screen__play-icon"
         />
