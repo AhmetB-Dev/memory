@@ -11,6 +11,10 @@ export type GameSetup = {
   boardSize: BoardSize;
 };
 
+type GameScreenActions = {
+  onExit: () => void;
+};
+
 type MemoryCard = {
   id: number;
   pairId: number;
@@ -26,7 +30,7 @@ type Player = {
   score: number;
 };
 
-export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
+export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions: GameScreenActions) {
   const TURN_TIME_SECONDS = 20;
 
   const cards = createMemoryCards(setup);
@@ -105,7 +109,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
 
   exitButton.addEventListener("click", () => {
     stopTimer();
-    console.log("Exit game clicked");
+    actions.onExit();
   });
 
   cardButtons.forEach((cardButton) => {
@@ -203,13 +207,9 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
     if (!isGameFinished) {
       resetTimer();
     }
-
-    console.log("Match found. Current player stays:", getCurrentPlayer());
   }
 
   function handleNoMatch(firstCard: MemoryCard, secondCard: MemoryCard) {
-    console.log("No match. Player will change.");
-
     setTimeout(() => {
       closeCard(firstCard);
       closeCard(secondCard);
@@ -282,8 +282,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
 
     isBoardLocked = false;
     resetTimer();
-
-    console.log("Time expired. Player changed:", getCurrentPlayer());
   }
 
   function switchPlayer() {
@@ -350,7 +348,10 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup) {
       },
       {
         onRestart: () => {
-          renderGameScreen(app, setup);
+          renderGameScreen(app, setup, actions);
+        },
+        onHome: () => {
+          actions.onExit();
         },
       },
     );

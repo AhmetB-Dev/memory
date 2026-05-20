@@ -4,6 +4,9 @@ body {
 
 section {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 button {
@@ -53,7 +56,7 @@ input {
 }
 
 .setup-screen {
-  padding: 5em;
+  padding: 0em 6em;
 }
 
 .setup-screen__header {

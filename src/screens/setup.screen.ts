@@ -1,4 +1,5 @@
 import { GAME_THEMES } from "../data/themes";
+import { renderHomeScreen } from "./home.screen";
 import { renderGameScreen, type BoardSize, type PlayerKey, type ThemeKey } from "./game.screen";
 
 type SetupState = {
@@ -229,11 +230,19 @@ export function renderSetupScreen(app: HTMLDivElement) {
       return;
     }
 
-    renderGameScreen(app, {
-      theme: setupState.theme,
-      player: setupState.player,
-      boardSize: setupState.boardSize,
-    });
+    renderGameScreen(
+      app,
+      {
+        theme: setupState.theme,
+        player: setupState.player,
+        boardSize: setupState.boardSize,
+      },
+      {
+        onExit: () => {
+          renderHomeScreen(app);
+        },
+      },
+    );
   });
 }
 
