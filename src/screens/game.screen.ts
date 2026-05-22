@@ -33,6 +33,7 @@ type Player = {
 export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions: GameScreenActions) {
   const TURN_TIME_SECONDS = 20;
 
+  const selectedTheme = getThemeById(setup.theme);
   const cards = createMemoryCards(setup);
   const players = createPlayers(setup.player);
 
@@ -43,7 +44,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   let timerId: number | undefined;
 
   app.innerHTML = `
-    <section class="game-screen">
+   <section class="game-screen ${selectedTheme.className}">
       <header class="game-screen__header">
         <div>
           <p class="game-screen__subtitle">Memory Game</p>
@@ -97,17 +98,55 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
           })
           .join("")}
       </div>
+
+      <div class="exit-modal" id="exit-modal" hidden>
+        <div class="exit-modal__content">
+          <h2>Exit game?</h2>
+
+          <p>Your current game will be lost.</p>
+
+          <div class="exit-modal__actions">
+            <button class="exit-modal__button" type="button" id="back-to-game-button">
+              Back to game
+            </button>
+
+            <button class="exit-modal__button exit-modal__button--danger" type="button" id="confirm-exit-button">
+              Exit game
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   `;
 
   const exitButton = app.querySelector<HTMLButtonElement>("#exit-game-button");
   const cardButtons = app.querySelectorAll<HTMLButtonElement>(".memory-card");
 
-  if (!exitButton) {
-    throw new Error("Exit game button not found");
+  const exitModal = app.querySelector<HTMLDivElement>("#exit-modal");
+  const backToGameButton = app.querySelector<HTMLButtonElement>("#back-to-game-button");
+  const confirmExitButton = app.querySelector<HTMLButtonElement>("#confirm-exit-button");
+
+  if (!exitButton || !exitModal || !backToGameButton || !confirmExitButton) {
+    throw new Error("Exit modal elements not found");
   }
 
   exitButton.addEventListener("click", () => {
+    if (isBoardLocked) {
+      return;
+    }
+
+    stopTimer();
+    isBoardLocked = true;
+    exitModal.hidden = false;
+  });
+
+  backToGameButton.addEventListener("click", () => {
+    exitModal.hidden = true;
+    isBoardLocked = false;
+    startTimer();
+  });
+
+  confirmExitButton.addEventListener("click", () => {
     stopTimer();
     actions.onExit();
   });
@@ -398,9 +437,7 @@ function createPlayers(startPlayer: PlayerKey): Player[] {
 }
 
 function createMemoryCards(setup: GameSetup): MemoryCard[] {
-  const selectedTheme = GAME_THEMES.find((theme) => {
-    return theme.id === setup.theme;
-  });
+  const selectedTheme = getThemeById(setup.theme);
 
   if (!selectedTheme) {
     throw new Error(`Theme not found: ${setup.theme}`);
@@ -440,6 +477,18 @@ function createMemoryCards(setup: GameSetup): MemoryCard[] {
   });
 
   return shuffleCards(cards);
+}
+
+function getThemeById(themeId: ThemeKey) {
+  const selectedTheme = GAME_THEMES.find((theme) => {
+    return theme.id === themeId;
+  });
+
+  if (!selectedTheme) {
+    throw new Error(`Theme not found: ${themeId}`);
+  }
+
+  return selectedTheme;
 }
 
 function shuffleCards(cards: MemoryCard[]): MemoryCard[] {
