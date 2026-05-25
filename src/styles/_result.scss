@@ -1,0 +1,172 @@
+.result-screen {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--result-bg);
+  color: var(--result-text);
+  text-align: center;
+}
+
+.result-screen__title {
+  margin: 0;
+  color: var(--result-title);
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.result-screen__subtitle {
+  margin: 0 0 0.4rem;
+  color: var(--result-subtitle);
+  font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+  font-weight: 700;
+}
+
+.result-screen__final-score {
+  margin-top: 2rem;
+
+  p {
+    margin: 0 0 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+}
+
+.result-screen__score-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.35rem;
+  background: #ffffff;
+}
+
+.result-screen__score {
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.result-screen__score--blue {
+  color: #1ea7ff;
+}
+
+.result-screen__score--orange {
+  color: #ff8426;
+}
+
+.result-screen__winner-image,
+.result-screen__draw-image {
+  width: clamp(5rem, 12vw, 10rem);
+  margin-top: 1.5rem;
+  object-fit: contain;
+}
+
+.result-screen__confetti {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+
+  width: min(90vw, 42rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.result-screen__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.result-screen__button {
+  padding: 0.65rem 1rem;
+  border-radius: 0.35rem;
+
+  background: var(--result-button-bg);
+  color: var(--result-button-text);
+
+  font-size: 0.8rem;
+  font-weight: 800;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Result Themes */
+
+.result-screen--coding {
+  --result-bg: #303131;
+  --result-text: #ffffff;
+  --result-subtitle: #ffffff;
+  --result-title: #58e0ca;
+  --result-button-bg: #6fa194;
+  --result-button-text: #ffffff;
+}
+
+.result-screen--coding.result-screen--orange {
+  --result-title: #ff8a26;
+}
+
+.result-screen--coding.result-screen--blue {
+  --result-title: #28aefc;
+}
+
+.result-screen--gaming {
+  --result-bg: #275568;
+  --result-text: #ffffff;
+  --result-subtitle: #ffffff;
+  --result-title: #ff258b;
+  --result-button-bg: #a24685;
+  --result-button-text: #ffffff;
+}
+
+.result-screen--gaming.result-screen--orange {
+  --result-title: #ff8426;
+}
+
+.result-screen--gaming.result-screen--blue {
+  --result-title: #1ea7ff;
+}
+
+.result-screen--da-projects {
+  --result-bg: #23819a;
+  --result-text: #ffffff;
+  --result-subtitle: #ffffff;
+  --result-title: #ff5f59;
+  --result-button-bg: #dff8ff;
+  --result-button-text: #23819a;
+}
+
+.result-screen--da-projects.result-screen--orange,
+.result-screen--da-projects.result-screen--blue {
+  --result-title: #ffffff;
+}
+
+.result-screen--foods {
+  --result-bg: #ff8426;
+  --result-text: #ffffff;
+  --result-subtitle: #ffffff;
+  --result-title: #ffffff;
+  --result-button-bg: #ff8426;
+  --result-button-text: #ffffff;
+}
+
+.result-screen--foods.result-screen--winner,
+.result-screen--foods.result-screen--draw {
+  --result-bg: #f7f7f7;
+  --result-text: #d46f28;
+  --result-subtitle: #d46f28;
+  --result-title: #d46f28;
+}
+
+.result-screen--foods.result-screen--blue {
+  --result-title: #1686c4;
+}
