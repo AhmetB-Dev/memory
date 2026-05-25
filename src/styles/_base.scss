@@ -7,7 +7,7 @@
   gap: 4em;
 
   background-color: #2f3131;
-  background-image: url("/assets/images/start/play-controller.webp");
+  background-image: url("/assets/images/base/play-controller.webp");
   background-size: 25%;
   background-repeat: no-repeat;
   background-position: 0% 95%;
@@ -57,7 +57,7 @@
     }
 
     .home-screen__arrow-bg {
-      background-image: url("/assets/images/start/arrow-right-hover.svg");
+      background-image: url("/assets/images/base/arrow-right-hover.svg");
     }
   }
 }
@@ -67,7 +67,7 @@
   height: 3rem;
   display: inline-block;
 
-  background-image: url("/assets/images/start/arrow-right.svg");
+  background-image: url("/assets/images/base/arrow-right.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

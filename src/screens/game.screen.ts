@@ -102,20 +102,17 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     </div>
   </div>
 </section>
-
-
   `;
 
-  const exitButton = app.querySelector<HTMLButtonElement>("#exit-game-button");
+  const exitButton = getRequiredElement<HTMLButtonElement>(app, "#exit-game-button");
+
+  const exitModal = getRequiredElement<HTMLDivElement>(app, "#exit-modal");
+
+  const backToGameButton = getRequiredElement<HTMLButtonElement>(app, "#back-to-game-button");
+
+  const confirmExitButton = getRequiredElement<HTMLButtonElement>(app, "#confirm-exit-button");
+
   const cardButtons = app.querySelectorAll<HTMLButtonElement>(".memory-card");
-
-  const exitModal = app.querySelector<HTMLDivElement>("#exit-modal");
-  const backToGameButton = app.querySelector<HTMLButtonElement>("#back-to-game-button");
-  const confirmExitButton = app.querySelector<HTMLButtonElement>("#confirm-exit-button");
-
-  if (!exitButton || !exitModal || !backToGameButton || !confirmExitButton) {
-    throw new Error("Exit modal elements not found");
-  }
 
   exitButton.addEventListener("click", () => {
     if (isBoardLocked) {
@@ -132,7 +129,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   });
 
   confirmExitButton.addEventListener("click", () => {
-    actions.onExit();
+    renderGameResult();
   });
 
   cardButtons.forEach((cardButton) => {
@@ -170,12 +167,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   function flipCard(card: MemoryCard) {
     card.isFlipped = true;
 
-    const cardButton = getCardButton(card.id);
-    const image = cardButton.querySelector<HTMLImageElement>(".memory-card__image");
-
-    if (!image) {
-      throw new Error("Card image not found");
-    }
+    const image = getCardImage(card.id);
 
     image.src = card.image;
     image.alt = "Memory card front";
@@ -184,12 +176,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   function closeCard(card: MemoryCard) {
     card.isFlipped = false;
 
-    const cardButton = getCardButton(card.id);
-    const image = cardButton.querySelector<HTMLImageElement>(".memory-card__image");
-
-    if (!image) {
-      throw new Error("Card image not found");
-    }
+    const image = getCardImage(card.id);
 
     image.src = card.backImage;
     image.alt = "Memory card back";
@@ -246,42 +233,36 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   }
 
   function updateScoreBoard() {
-    const currentPlayerIcon = app.querySelector<HTMLImageElement>("#current-player-icon");
-    const blueScoreElement = app.querySelector<HTMLElement>("#blue-score");
-    const orangeScoreElement = app.querySelector<HTMLElement>("#orange-score");
+    const currentPlayerIcon = getRequiredElement<HTMLImageElement>(app, "#current-player-icon");
 
-    if (!currentPlayerIcon || !blueScoreElement || !orangeScoreElement) {
-      throw new Error("Score board elements not found");
-    }
+    const blueScoreElement = getRequiredElement<HTMLElement>(app, "#blue-score");
 
-    const bluePlayer = players.find((player) => {
-      return player.id === "blue";
-    });
+    const orangeScoreElement = getRequiredElement<HTMLElement>(app, "#orange-score");
 
-    const orangePlayer = players.find((player) => {
-      return player.id === "orange";
-    });
+    const bluePlayer = getPlayerById("blue");
+    const orangePlayer = getPlayerById("orange");
+    const currentPlayer = getCurrentPlayer();
 
-    if (!bluePlayer || !orangePlayer) {
-      throw new Error("Players not found");
-    }
-
-    currentPlayerIcon.src = getPlayerIcon(getCurrentPlayer().id);
-    currentPlayerIcon.alt = `${getCurrentPlayer().name} player`;
+    currentPlayerIcon.src = getPlayerIcon(currentPlayer.id);
+    currentPlayerIcon.alt = `${currentPlayer.name} player`;
 
     blueScoreElement.textContent = String(bluePlayer.score);
     orangeScoreElement.textContent = String(orangePlayer.score);
   }
 
-  function checkGameEnd(): boolean {
+  function checkGameEnd() {
     const allCardsMatched = cards.every((card) => {
       return card.isMatched;
     });
 
     if (!allCardsMatched) {
-      return false;
+      return;
     }
 
+    renderGameResult();
+  }
+
+  function renderGameResult() {
     const highestScore = Math.max(
       ...players.map((player) => {
         return player.score;
@@ -309,8 +290,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
         },
       },
     );
-
-    return true;
   }
 
   function disableMatchedCard(card: MemoryCard) {
@@ -320,14 +299,24 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     cardButton.classList.add("is-matched");
   }
 
-  function getCardButton(cardId: number) {
-    const cardButton = app.querySelector<HTMLButtonElement>(`.memory-card[data-card-id="${cardId}"]`);
+  function getPlayerById(playerId: PlayerKey) {
+    const player = players.find((currentPlayer) => {
+      return currentPlayer.id === playerId;
+    });
 
-    if (!cardButton) {
-      throw new Error(`Card button not found: ${cardId}`);
+    if (!player) {
+      throw new Error(`Player not found: ${playerId}`);
     }
 
-    return cardButton;
+    return player;
+  }
+
+  function getCardImage(cardId: number) {
+    return getRequiredElement<HTMLImageElement>(getCardButton(cardId), ".memory-card__image");
+  }
+
+  function getCardButton(cardId: number) {
+    return getRequiredElement<HTMLButtonElement>(app, `.memory-card[data-card-id="${cardId}"]`);
   }
 }
 
@@ -414,4 +403,14 @@ function shuffleCards(cards: MemoryCard[]): MemoryCard[] {
   return [...cards].sort(() => {
     return Math.random() - 0.5;
   });
+}
+
+function getRequiredElement<T extends HTMLElement>(parent: ParentNode, selector: string): T {
+  const element = parent.querySelector<T>(selector);
+
+  if (!element) {
+    throw new Error(`Element not found: ${selector}`);
+  }
+
+  return element;
 }

@@ -10,6 +10,9 @@ type SetupState = {
 
 const DEFAULT_THEME: ThemeKey = "coding";
 
+const DEFAULT_DIVIDER_IMAGE = "/assets/images/setting/summary-divider.svg";
+const COMPLETE_DIVIDER_IMAGE = "/assets/images/setting/Line.svg";
+
 export function renderSetupScreen(app: HTMLDivElement) {
   const setupState: SetupState = {
     theme: DEFAULT_THEME,
@@ -19,7 +22,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
 
   app.innerHTML = `
     <section class="setup-screen">
-      <div class="setup-screen__content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end">
         <div class="setup-screen__layout">
           <div class="setup-screen__header">
             <h1 class="setup-screen__title">Settings</h1>
@@ -123,27 +126,23 @@ export function renderSetupScreen(app: HTMLDivElement) {
                   <strong id="summary-theme">Code vibes theme</strong>
                 </div>
 
-                <span class="setup-screen__divider">
-                  <img
-                    class="setup-screen__decoration-icon"
-                    src="/assets/images/setting/summary-divider.svg"
-                    alt=""
-                  />
-                  <span class="setup-screen__decoration-line" aria-hidden="true"></span>
-                </span>
+                <img
+                  class="setup-screen__decoration-icon"
+                  data-summary-divider
+                  src="${DEFAULT_DIVIDER_IMAGE}"
+                  alt=""
+                />
 
                 <div class="setup-screen__summary-item">
                   <strong id="summary-player">Player</strong>
                 </div>
 
-                <span class="setup-screen__divider">
-                  <img
-                    class="setup-screen__decoration-icon"
-                    src="/assets/images/setting/summary-divider.svg"
-                    alt=""
-                  />
-                  <span class="setup-screen__decoration-line" aria-hidden="true"></span>
-                </span>
+                <img
+                  class="setup-screen__decoration-icon"
+                  data-summary-divider
+                  src="${DEFAULT_DIVIDER_IMAGE}"
+                  alt=""
+                />
 
                 <div class="setup-screen__summary-item">
                   <strong id="summary-board-size">Board size</strong>
@@ -181,6 +180,8 @@ export function renderSetupScreen(app: HTMLDivElement) {
   const summaryBoardSize = getRequiredElement<HTMLElement>(app, "#summary-board-size");
 
   const themePreviewImage = getRequiredElement<HTMLImageElement>(app, "#theme-preview-image");
+
+  const summaryDividers = app.querySelectorAll<HTMLImageElement>("[data-summary-divider]");
 
   const themeInputs = app.querySelectorAll<HTMLInputElement>('input[name="theme"]');
 
@@ -221,12 +222,20 @@ export function renderSetupScreen(app: HTMLDivElement) {
     return Boolean(setupState.player && setupState.boardSize);
   }
 
+  function updateDividerImages(isComplete: boolean) {
+    summaryDividers.forEach((divider) => {
+      divider.src = isComplete ? COMPLETE_DIVIDER_IMAGE : DEFAULT_DIVIDER_IMAGE;
+    });
+  }
+
   function updateStartButtonState() {
     const isComplete = isSetupComplete();
 
     startButton.disabled = !isComplete;
 
     summaryContent.classList.toggle("setup-screen__summary-content--complete", isComplete);
+
+    updateDividerImages(isComplete);
   }
 
   themeOptions.forEach((option) => {
