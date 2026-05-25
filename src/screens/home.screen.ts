@@ -9,11 +9,12 @@ export function renderHomeScreen(app: HTMLDivElement) {
 
       <button class="home-screen__play-button" type="button" id="play-button">
         <img 
-          src="/assets/images/shared/play-controller.svg"" 
+          src="/assets/images/start/play-controller.svg"" 
           alt="" 
           class="home-screen__play-icon"
         />
         <span>Play</span>
+        <span class="home-screen__arrow-bg"></span>
       </button>
     </section>
   `;

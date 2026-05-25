@@ -3,163 +3,191 @@ import { renderHomeScreen } from "./home.screen";
 import { renderGameScreen, type BoardSize, type PlayerKey, type ThemeKey } from "./game.screen";
 
 type SetupState = {
-  theme?: ThemeKey;
+  theme: ThemeKey;
   player?: PlayerKey;
   boardSize?: BoardSize;
 };
 
-const DECORATIVE_START_THEME: ThemeKey = "coding";
+const DEFAULT_THEME: ThemeKey = "coding";
 
 export function renderSetupScreen(app: HTMLDivElement) {
-  const setupState: SetupState = {};
+  const setupState: SetupState = {
+    theme: DEFAULT_THEME,
+  };
 
-  const decorativeTheme = getThemeById(DECORATIVE_START_THEME);
+  const defaultTheme = getThemeById(DEFAULT_THEME);
 
   app.innerHTML = `
     <section class="setup-screen">
-      <div class="setup-screen__header">
-        <h1 class="setup-screen__title">Settings</h1>
-        <img src="/assets/images/shared/arrow-line-long.svg" alt="" />
-      </div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end">
+        <div class="setup-screen__layout">
+          <div class="setup-screen__header">
+            <h1 class="setup-screen__title">Settings</h1>
+            <img src="/assets/images/shared/arrow-line-long.svg" alt="" />
+          </div>
 
-      <div class="setup-screen__layout">
-        <div class="setup-screen__options">
-          <!-- Game themes -->
-          <div class="setup-group">
+          <div class="setup-screen__options">
+            <div class="setup-group">
+              <div class="setup-group__icon">
+                <img src="/assets/images/setting/palette.svg" alt="" />
+              </div>
+
+              <div class="setup-group__content">
+                <h2>Game themes</h2>
+
+                <label class="setup-option" data-theme-option="coding">
+                  <input type="radio" name="theme" value="coding" checked />
+                  <span>Code vibes theme</span>
+                </label>
+
+                <label class="setup-option" data-theme-option="gaming">
+                  <input type="radio" name="theme" value="gaming" />
+                  <span>Gaming theme</span>
+                </label>
+
+                <label class="setup-option" data-theme-option="da-projects">
+                  <input type="radio" name="theme" value="da-projects" />
+                  <span>DA Projects theme</span>
+                </label>
+
+                <label class="setup-option" data-theme-option="foods">
+                  <input type="radio" name="theme" value="foods" />
+                  <span>Foods theme</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setup-group">
+              <div class="setup-group__icon">
+                <img src="/assets/images/setting/chess_pawn.svg" alt="" />
+              </div>
+
+              <div class="setup-group__content">
+                <h2>Choose player</h2>
+
+                <label class="setup-option">
+                  <input type="radio" name="player" value="blue" />
+                  <span>Blue</span>
+                </label>
+
+                <label class="setup-option">
+                  <input type="radio" name="player" value="orange" />
+                  <span>Orange</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setup-group">
+              <div class="setup-group__icon">
+                <img src="/assets/images/setting/card.svg" alt="" />
+              </div>
+
+              <div class="setup-group__content">
+                <h2>Board size</h2>
+
+                <label class="setup-option">
+                  <input type="radio" name="boardSize" value="16" />
+                  <span>16 cards</span>
+                </label>
+
+                <label class="setup-option">
+                  <input type="radio" name="boardSize" value="24" />
+                  <span>24 cards</span>
+                </label>
+
+                <label class="setup-option">
+                  <input type="radio" name="boardSize" value="36" />
+                  <span>36 cards</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setup-screen__dp-flex">
+          <div class="setup-screen__theme-preview">
+            <div class="setup-screen__theme-preview-card">
+              <img
+                id="theme-preview-image"
+                class="setup-screen__theme-preview-image"
+                src="${defaultTheme.previewImage}"
+                alt="${defaultTheme.name} preview"
+              />
+            </div>
+          </div>
+
+          <div class="setup-screen__summary">
             <div>
-              <img src="/assets/images/shared/palette.svg" alt="" />
-            </div>
+              <div class="setup-screen__summary-content" id="summary-content">
+                <div class="setup-screen__summary-item">
+                  <strong id="summary-theme">Code vibes theme</strong>
+                </div>
 
-            <div class="setup-group__content">
-              <h2>Game themes</h2>
+                <span class="setup-screen__divider">
+                  <img
+                    class="setup-screen__decoration-icon"
+                    src="/assets/images/setting/summary-divider.svg"
+                    alt=""
+                  />
+                  <span class="setup-screen__decoration-line" aria-hidden="true"></span>
+                </span>
 
-              <label class="setup-option">
-                <input type="radio" name="theme" value="coding" />
-                <span>Code vibes theme</span>
-              </label>
+                <div class="setup-screen__summary-item">
+                  <strong id="summary-player">Player</strong>
+                </div>
 
-              <label class="setup-option">
-                <input type="radio" name="theme" value="gaming" />
-                <span>Gaming theme</span>
-              </label>
+                <span class="setup-screen__divider">
+                  <img
+                    class="setup-screen__decoration-icon"
+                    src="/assets/images/setting/summary-divider.svg"
+                    alt=""
+                  />
+                  <span class="setup-screen__decoration-line" aria-hidden="true"></span>
+                </span>
 
-              <label class="setup-option">
-                <input type="radio" name="theme" value="da-projects" />
-                <span>DA Projects theme</span>
-              </label>
+                <div class="setup-screen__summary-item">
+                  <strong id="summary-board-size">Board size</strong>
+                </div>
 
-              <label class="setup-option">
-                <input type="radio" name="theme" value="foods" />
-                <span>Foods theme</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Choose player -->
-          <div class="setup-group">
-            <div>
-              <img src="/assets/images/shared/chess_pawn.svg" alt="" />
-            </div>
-
-            <div class="setup-group__content">
-              <h2>Choose player</h2>
-
-              <label class="setup-option">
-                <input type="radio" name="player" value="blue" />
-                <span>Blue</span>
-              </label>
-
-              <label class="setup-option">
-                <input type="radio" name="player" value="orange" />
-                <span>Orange</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Board size -->
-          <div class="setup-group">
-            <div>
-              <img src="/assets/images/shared/card.svg" alt="" />
-            </div>
-
-            <div class="setup-group__content">
-              <h2>Board size</h2>
-
-              <label class="setup-option">
-                <input type="radio" name="boardSize" value="16" />
-                <span>16 cards</span>
-              </label>
-
-              <label class="setup-option">
-                <input type="radio" name="boardSize" value="24" />
-                <span>24 cards</span>
-              </label>
-
-              <label class="setup-option">
-                <input type="radio" name="boardSize" value="36" />
-                <span>36 cards</span>
-              </label>
+                <button
+                  class="setup-screen__start-button"
+                  type="button"
+                  id="start-button"
+                  disabled
+                >
+                  <img
+                    src="/assets/images/setting/start-icon.svg"
+                    alt=""
+                    class="setup-screen__start-icon"
+                  />
+                  <span>Start</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="setup-screen__theme-preview">
-          <div class="setup-screen__theme-preview-card">
-            <img
-              id="theme-preview-image"
-              class="setup-screen__theme-preview-image"
-              src="${decorativeTheme.previewImage}"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="setup-screen__summary">
-        <div class="setup-screen__summary-item">
-          <strong id="summary-theme">Game theme</strong>
-        </div>
-
-        <img src="/assets/images/shared/summary-divider.svg" alt="" />
-
-        <div class="setup-screen__summary-item">
-          <strong id="summary-player">Player</strong>
-        </div>
-
-        <img class="setup-screen__bg-color-decor" src="/assets/images/shared/summary-divider.svg" alt="" />
-
-        <div class="setup-screen__summary-item">
-          <strong id="summary-board-size">Board size</strong>
-        </div>
-
-        <button class="setup-screen__start-button" type="button" id="start-button">
-          <img src="/assets/images/shared/start-icon.svg" alt="" class="setup-screen__start-icon" />
-          <span>Start</span>
-        </button>
       </div>
     </section>
   `;
 
-  function getRequiredElement<T extends HTMLElement>(selector: string): T {
-    const element = app.querySelector<T>(selector);
+  const startButton = getRequiredElement<HTMLButtonElement>(app, "#start-button");
 
-    if (!element) {
-      throw new Error(`Element not found: ${selector}`);
-    }
+  const summaryContent = getRequiredElement<HTMLElement>(app, "#summary-content");
 
-    return element;
-  }
+  const summaryTheme = getRequiredElement<HTMLElement>(app, "#summary-theme");
 
-  const startButton = getRequiredElement<HTMLButtonElement>("#start-button");
+  const summaryPlayer = getRequiredElement<HTMLElement>(app, "#summary-player");
 
-  const summaryTheme = getRequiredElement<HTMLElement>("#summary-theme");
-  const summaryPlayer = getRequiredElement<HTMLElement>("#summary-player");
-  const summaryBoardSize = getRequiredElement<HTMLElement>("#summary-board-size");
+  const summaryBoardSize = getRequiredElement<HTMLElement>(app, "#summary-board-size");
 
-  const themePreviewImage = getRequiredElement<HTMLImageElement>("#theme-preview-image");
+  const themePreviewImage = getRequiredElement<HTMLImageElement>(app, "#theme-preview-image");
 
   const themeInputs = app.querySelectorAll<HTMLInputElement>('input[name="theme"]');
+
+  const themeOptions = app.querySelectorAll<HTMLElement>("[data-theme-option]");
+
   const playerInputs = app.querySelectorAll<HTMLInputElement>('input[name="player"]');
+
   const boardSizeInputs = app.querySelectorAll<HTMLInputElement>('input[name="boardSize"]');
 
   function updateSummary() {
@@ -175,32 +203,50 @@ export function renderSetupScreen(app: HTMLDivElement) {
       orange: "Orange",
     };
 
-    summaryTheme.textContent = setupState.theme ? themeLabels[setupState.theme] : "Game theme";
+    summaryTheme.textContent = themeLabels[setupState.theme];
 
     summaryPlayer.textContent = setupState.player ? playerLabels[setupState.player] : "Player";
 
     summaryBoardSize.textContent = setupState.boardSize ? `${setupState.boardSize} cards` : "Board size";
   }
 
-  function updateThemePreview() {
-    if (!setupState.theme) {
-      return;
-    }
-
-    const selectedTheme = getThemeById(setupState.theme);
+  function updateThemePreview(themeId: ThemeKey) {
+    const selectedTheme = getThemeById(themeId);
 
     themePreviewImage.src = selectedTheme.previewImage;
     themePreviewImage.alt = `${selectedTheme.name} preview`;
   }
+
+  function isSetupComplete() {
+    return Boolean(setupState.player && setupState.boardSize);
+  }
+
+  function updateStartButtonState() {
+    const isComplete = isSetupComplete();
+
+    startButton.disabled = !isComplete;
+
+    summaryContent.classList.toggle("setup-screen__summary-content--complete", isComplete);
+  }
+
+  themeOptions.forEach((option) => {
+    option.addEventListener("mouseenter", () => {
+      const themeId = option.dataset.themeOption as ThemeKey;
+      updateThemePreview(themeId);
+    });
+
+    option.addEventListener("mouseleave", () => {
+      updateThemePreview(setupState.theme);
+    });
+  });
 
   themeInputs.forEach((input) => {
     input.addEventListener("change", () => {
       setupState.theme = input.value as ThemeKey;
 
       updateSummary();
-      updateThemePreview();
-
-      console.log("Selected theme:", setupState.theme);
+      updateThemePreview(setupState.theme);
+      updateStartButtonState();
     });
   });
 
@@ -209,8 +255,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
       setupState.player = input.value as PlayerKey;
 
       updateSummary();
-
-      console.log("Selected player:", setupState.player);
+      updateStartButtonState();
     });
   });
 
@@ -219,14 +264,16 @@ export function renderSetupScreen(app: HTMLDivElement) {
       setupState.boardSize = Number(input.value) as BoardSize;
 
       updateSummary();
-
-      console.log("Selected board size:", setupState.boardSize);
+      updateStartButtonState();
     });
   });
 
   startButton.addEventListener("click", () => {
-    if (!setupState.theme || !setupState.player || !setupState.boardSize) {
-      console.log("Please select theme, player and board size first.");
+    if (!isSetupComplete()) {
+      return;
+    }
+
+    if (!setupState.player || !setupState.boardSize) {
       return;
     }
 
@@ -244,6 +291,16 @@ export function renderSetupScreen(app: HTMLDivElement) {
       },
     );
   });
+}
+
+function getRequiredElement<T extends HTMLElement>(parent: ParentNode, selector: string): T {
+  const element = parent.querySelector<T>(selector);
+
+  if (!element) {
+    throw new Error(`Element not found: ${selector}`);
+  }
+
+  return element;
 }
 
 function getThemeById(themeId: ThemeKey) {

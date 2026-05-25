@@ -1,3 +1,5 @@
+import type { ThemeKey } from "./game.screen";
+
 export type ResultPlayer = {
   id: "blue" | "orange";
   name: string;
@@ -8,6 +10,7 @@ type ResultScreenData = {
   players: ResultPlayer[];
   winners: ResultPlayer[];
   isTie: boolean;
+  theme: ThemeKey;
 };
 
 type ResultScreenActions = {
@@ -25,17 +28,20 @@ export function renderResultScreen(
   const bluePlayer = getPlayerById(result.players, "blue");
   const orangePlayer = getPlayerById(result.players, "orange");
 
-  let gameOverTimeoutId: number | undefined;
+  let timeoutId: number | undefined;
 
   renderGameOverScreen();
 
-  gameOverTimeoutId = window.setTimeout(() => {
+  timeoutId = window.setTimeout(() => {
     renderFinalResultScreen();
   }, GAME_OVER_DURATION_IN_MS);
 
   function renderGameOverScreen() {
     app.innerHTML = `
-      <section class="result-screen result-screen--game-over" id="game-over-screen">
+      <section
+        class="result-screen result-screen--${result.theme} result-screen--game-over"
+        id="game-over-screen"
+      >
         <h1 class="result-screen__title">GAME OVER</h1>
 
         <div class="result-screen__final-score">
@@ -61,16 +67,14 @@ export function renderResultScreen(
     }
 
     gameOverScreen.addEventListener("click", () => {
-      if (gameOverTimeoutId !== undefined) {
-        clearTimeout(gameOverTimeoutId);
-        gameOverTimeoutId = undefined;
-      }
-
+      clearResultTimeout();
       renderFinalResultScreen();
     });
   }
 
   function renderFinalResultScreen() {
+    clearResultTimeout();
+
     if (result.isTie) {
       renderDrawScreen();
       return;
@@ -81,26 +85,22 @@ export function renderResultScreen(
 
   function renderWinnerScreen(winner: ResultPlayer) {
     app.innerHTML = `
-      <section class="result-screen result-screen--winner result-screen--${winner.id}">
+      <section class="result-screen result-screen--${result.theme} result-screen--winner result-screen--${winner.id}">
+        ${createConfettiHtml(result.theme)}
+
         <p class="result-screen__subtitle">The winner is</p>
 
         <h1 class="result-screen__title">
           ${winner.name} Player
         </h1>
 
-        <div class="result-screen__winner-icon result-screen__winner-icon--${winner.id}">
-          ${winner.id === "blue" ? "♟" : "♙"}
-        </div>
+        <img
+          class="result-screen__winner-image"
+          src="${getWinnerImage(result.theme, winner.id)}"
+          alt="${winner.name} player"
+        />
 
-        <div class="result-screen__actions">
-          <button class="result-screen__restart-button" type="button" id="restart-button">
-            Restart
-          </button>
-
-          <button class="result-screen__home-button" type="button" id="home-button">
-            Home
-          </button>
-        </div>
+        ${createResultActionsHtml()}
       </section>
     `;
 
@@ -109,26 +109,20 @@ export function renderResultScreen(
 
   function renderDrawScreen() {
     app.innerHTML = `
-      <section class="result-screen result-screen--draw">
+      <section class="result-screen result-screen--${result.theme} result-screen--draw">
         <p class="result-screen__subtitle">It's a</p>
 
         <h1 class="result-screen__title">
           DRAW
         </h1>
 
-        <div class="result-screen__draw-icon">
-          ⚖
-        </div>
+        <img
+          class="result-screen__draw-image"
+          src="${getDrawImage(result.theme)}"
+          alt="Draw"
+        />
 
-        <div class="result-screen__actions">
-          <button class="result-screen__restart-button" type="button" id="restart-button">
-            Restart
-          </button>
-
-          <button class="result-screen__home-button" type="button" id="home-button">
-            Home
-          </button>
-        </div>
+        ${createResultActionsHtml()}
       </section>
     `;
 
@@ -151,6 +145,75 @@ export function renderResultScreen(
       actions.onHome();
     });
   }
+
+  function clearResultTimeout() {
+    if (timeoutId !== undefined) {
+      clearTimeout(timeoutId);
+      timeoutId = undefined;
+    }
+  }
+}
+
+function createResultActionsHtml() {
+  return `
+    <div class="result-screen__actions">
+      <button class="result-screen__button" type="button" id="restart-button">
+        Restart
+      </button>
+
+      <button class="result-screen__button" type="button" id="home-button">
+        Home
+      </button>
+    </div>
+  `;
+}
+
+function createConfettiHtml(theme: ThemeKey) {
+  if (theme !== "coding") {
+    return "";
+  }
+
+  return `
+    <img
+      class="result-screen__confetti"
+      src="/assets/images/themes/coding/Confetti.png"
+      alt=""
+    />
+  `;
+}
+
+function getWinnerImage(theme: ThemeKey, playerId: "blue" | "orange") {
+  const images: Record<ThemeKey, Record<"blue" | "orange", string>> = {
+    coding: {
+      blue: "/assets/images/themes/coding/Player.png",
+      orange: "/assets/images/themes/coding/Player%20(1).png",
+    },
+    gaming: {
+      blue: "/assets/images/themes/gaming/pockal%201.png",
+      orange: "/assets/images/themes/gaming/pockal%201.png",
+    },
+    "da-projects": {
+      blue: "/assets/images/themes/da-projects/Player%20(3).png",
+      orange: "/assets/images/themes/da-projects/Player%20(2).png",
+    },
+    foods: {
+      blue: "/assets/images/themes/foods/Player%20illustration.png",
+      orange: "/assets/images/themes/foods/Frame%20739.png",
+    },
+  };
+
+  return images[theme][playerId];
+}
+
+function getDrawImage(theme: ThemeKey) {
+  const images: Record<ThemeKey, string> = {
+    coding: "/assets/images/themes/coding/Scale_Icon.png",
+    gaming: "/assets/images/themes/gaming/Scale_Icon%20(3).png",
+    "da-projects": "/assets/images/themes/da-projects/Scale_icon%20(1).png",
+    foods: "/assets/images/themes/foods/scale_icon%20(2).png",
+  };
+
+  return images[theme];
 }
 
 function getPlayerById(players: ResultPlayer[], playerId: "blue" | "orange") {

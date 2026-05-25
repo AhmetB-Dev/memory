@@ -31,8 +31,6 @@ type Player = {
 };
 
 export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions: GameScreenActions) {
-  const TURN_TIME_SECONDS = 20;
-
   const selectedTheme = getThemeById(setup.theme);
   const cards = createMemoryCards(setup);
   const players = createPlayers(setup.player);
@@ -40,83 +38,72 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   let currentPlayerIndex = 0;
   let openCards: MemoryCard[] = [];
   let isBoardLocked = false;
-  let timeLeft = TURN_TIME_SECONDS;
-  let timerId: number | undefined;
 
   app.innerHTML = `
-   <section class="game-screen ${selectedTheme.className}">
-      <header class="game-screen__header">
-        <div>
-          <p class="game-screen__subtitle">Memory Game</p>
-          <h1 class="game-screen__title">Find all pairs</h1>
-        </div>
-
-        <button class="game-screen__exit-button" type="button" id="exit-game-button">
-          Exit
-        </button>
-      </header>
-
-      <div class="game-screen__info">
-        <div class="game-screen__info-item">
-          <span>Current player</span>
-          <strong id="current-player">${getCurrentPlayer().name}</strong>
-        </div>
-
-        <div class="game-screen__info-item">
-          <span>Time</span>
-          <strong id="turn-timer">${TURN_TIME_SECONDS}</strong>
-        </div>
-
-        <div class="game-screen__info-item">
-          <span>Blue score</span>
+ <section class="game-screen ${selectedTheme.className}">
+  <header class="game-screen__dp">
+    <div class="game-screen__header">
+      <div class="game-screen__info-item">
+        <div class="game-screen__player-score">
+          <img src="public/assets/images/shared/chess_pawn_blue.svg" alt="" />
           <strong id="blue-score">0</strong>
         </div>
 
-        <div class="game-screen__info-item">
-          <span>Orange score</span>
+        <div class="game-screen__player-score">
+          <img src="public/assets/images/shared/chess_pawn_orange.svg" alt="" />
           <strong id="orange-score">0</strong>
         </div>
+      </div>
 
-        <div class="game-screen__info-item">
-          <span>Board size</span>
-          <strong>${setup.boardSize} cards</strong>
+      <div class="game-screen__info-item">
+        <span>Current player:</span>
+        <img
+          id="current-player-icon"
+          class="game-screen__current-player-icon"
+          src="${getPlayerIcon(getCurrentPlayer().id)}"
+          alt="${getCurrentPlayer().name} player"
+        />
+      </div>
+
+      <div class="game-screen__exit-content">
+        <div>
+          <img src="/assets/images/themes/gaming/exit.webp" alt="exit" />
         </div>
+        <button class="game-screen__exit-button" type="button" id="exit-game-button">Exit game</button>
       </div>
+    </div>
+  </header>
 
-      <div class="game-screen__board">
-        ${cards
-          .map((card) => {
-            return `
-              <button class="memory-card" type="button" data-card-id="${card.id}">
-                <img
-                  src="${card.backImage}"
-                  alt="Memory card back"
-                  class="memory-card__image"
-                />
-              </button>
-            `;
-          })
-          .join("")}
+  <div class="game-screen__board game-screen__board--${setup.boardSize}">
+    ${cards
+      .map((card) => {
+        return `
+    <button class="memory-card" type="button" data-card-id="${card.id}">
+      <img src="${card.backImage}" alt="Memory card back" class="memory-card__image" />
+    </button>
+    `;
+      })
+      .join("")}
+  </div>
+
+  <div class="exit-modal" id="exit-modal" hidden>
+    <div class="exit-modal__content">
+      <h2>Exit game?</h2>
+
+      <p>Your current game will be lost.</p>
+
+      <div class="exit-modal__actions">
+        <button class="exit-modal__button" type="button" id="back-to-game-button">Back to game</button>
+
+        <button class="exit-modal__button exit-modal__button--danger" type="button" id="confirm-exit-button">
+          Exit game
+        </button>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="exit-modal" id="exit-modal" hidden>
-        <div class="exit-modal__content">
-          <h2>Exit game?</h2>
 
-          <p>Your current game will be lost.</p>
-
-          <div class="exit-modal__actions">
-            <button class="exit-modal__button" type="button" id="back-to-game-button">
-              Back to game
-            </button>
-
-            <button class="exit-modal__button exit-modal__button--danger" type="button" id="confirm-exit-button">
-              Exit game
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
   `;
 
   const exitButton = app.querySelector<HTMLButtonElement>("#exit-game-button");
@@ -135,7 +122,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
       return;
     }
 
-    stopTimer();
     isBoardLocked = true;
     exitModal.hidden = false;
   });
@@ -143,11 +129,9 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   backToGameButton.addEventListener("click", () => {
     exitModal.hidden = true;
     isBoardLocked = false;
-    startTimer();
   });
 
   confirmExitButton.addEventListener("click", () => {
-    stopTimer();
     actions.onExit();
   });
 
@@ -157,8 +141,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
       handleCardClick(cardId);
     });
   });
-
-  startTimer();
 
   function handleCardClick(cardId: number) {
     if (isBoardLocked) {
@@ -215,7 +197,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
 
   function checkOpenCards() {
     isBoardLocked = true;
-    stopTimer();
 
     const [firstCard, secondCard] = openCards;
 
@@ -240,12 +221,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     isBoardLocked = false;
 
     updateScoreBoard();
-
-    const isGameFinished = checkGameEnd();
-
-    if (!isGameFinished) {
-      resetTimer();
-    }
+    checkGameEnd();
   }
 
   function handleNoMatch(firstCard: MemoryCard, secondCard: MemoryCard) {
@@ -258,69 +234,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
       updateScoreBoard();
 
       isBoardLocked = false;
-      resetTimer();
     }, 1000);
-  }
-
-  function startTimer() {
-    stopTimer();
-
-    timerId = window.setInterval(() => {
-      timeLeft -= 1;
-      updateTimerDisplay();
-
-      if (timeLeft <= 0) {
-        handleTimeExpired();
-      }
-    }, 1000);
-  }
-
-  function stopTimer() {
-    if (timerId === undefined) {
-      return;
-    }
-
-    clearInterval(timerId);
-    timerId = undefined;
-  }
-
-  function resetTimer() {
-    stopTimer();
-    timeLeft = TURN_TIME_SECONDS;
-    updateTimerDisplay();
-    startTimer();
-  }
-
-  function updateTimerDisplay() {
-    const timerElement = app.querySelector<HTMLElement>("#turn-timer");
-
-    if (!timerElement) {
-      throw new Error("Timer element not found");
-    }
-
-    timerElement.textContent = String(timeLeft);
-  }
-
-  function handleTimeExpired() {
-    stopTimer();
-
-    if (isBoardLocked) {
-      return;
-    }
-
-    isBoardLocked = true;
-
-    if (openCards.length === 1) {
-      closeCard(openCards[0]);
-    }
-
-    openCards = [];
-
-    switchPlayer();
-    updateScoreBoard();
-
-    isBoardLocked = false;
-    resetTimer();
   }
 
   function switchPlayer() {
@@ -332,11 +246,11 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   }
 
   function updateScoreBoard() {
-    const currentPlayerElement = app.querySelector<HTMLElement>("#current-player");
+    const currentPlayerIcon = app.querySelector<HTMLImageElement>("#current-player-icon");
     const blueScoreElement = app.querySelector<HTMLElement>("#blue-score");
     const orangeScoreElement = app.querySelector<HTMLElement>("#orange-score");
 
-    if (!currentPlayerElement || !blueScoreElement || !orangeScoreElement) {
+    if (!currentPlayerIcon || !blueScoreElement || !orangeScoreElement) {
       throw new Error("Score board elements not found");
     }
 
@@ -352,7 +266,9 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
       throw new Error("Players not found");
     }
 
-    currentPlayerElement.textContent = getCurrentPlayer().name;
+    currentPlayerIcon.src = getPlayerIcon(getCurrentPlayer().id);
+    currentPlayerIcon.alt = `${getCurrentPlayer().name} player`;
+
     blueScoreElement.textContent = String(bluePlayer.score);
     orangeScoreElement.textContent = String(orangePlayer.score);
   }
@@ -365,8 +281,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     if (!allCardsMatched) {
       return false;
     }
-
-    stopTimer();
 
     const highestScore = Math.max(
       ...players.map((player) => {
@@ -384,6 +298,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
         players,
         winners,
         isTie: winners.length > 1,
+        theme: setup.theme,
       },
       {
         onRestart: () => {
@@ -438,11 +353,6 @@ function createPlayers(startPlayer: PlayerKey): Player[] {
 
 function createMemoryCards(setup: GameSetup): MemoryCard[] {
   const selectedTheme = getThemeById(setup.theme);
-
-  if (!selectedTheme) {
-    throw new Error(`Theme not found: ${setup.theme}`);
-  }
-
   const neededPairs = setup.boardSize / 2;
 
   if (selectedTheme.cardImages.length < neededPairs) {
@@ -489,6 +399,15 @@ function getThemeById(themeId: ThemeKey) {
   }
 
   return selectedTheme;
+}
+
+function getPlayerIcon(playerId: PlayerKey): string {
+  const playerIcons: Record<PlayerKey, string> = {
+    blue: "/assets/images/shared/chess_pawn_blue.svg",
+    orange: "/assets/images/shared/chess_pawn_orange.svg",
+  };
+
+  return playerIcons[playerId];
 }
 
 function shuffleCards(cards: MemoryCard[]): MemoryCard[] {
