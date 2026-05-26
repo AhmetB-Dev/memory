@@ -7,11 +7,34 @@
   }
 }
 
+.game-screen__player-score-icon {
+  width: 2rem;
+  height: 2rem;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.game-screen__player-score-icon--blue {
+  background-image: var(--game-player-blue-image);
+}
+
+.game-screen__player-score-icon--orange {
+  background-image: var(--game-player-orange-image);
+}
+
 .game-screen.theme-coding {
   --game-bg: #303131;
   --game-text: #ffffff;
   --game-accent: #f0ea6e;
-  --game-header-bg: #3f4242;
+  --game-header-bg: #303131;
+  --border-exit: solid 1px #4dd5bc;
+  --border-radius-exit: 0;
+  --current-player-img: url("");
+
+  --game-player-blue-image: url("/assets/images/themes/coding/label_blue.svg");
+  --game-player-orange-image: url("/assets/images/themes/coding/label_orange.svg");
 }
 
 .game-screen.theme-gaming {
@@ -19,6 +42,11 @@
   --game-text: #ffffff;
   --game-accent: #6ee7f0;
   --game-header-bg: #545d75;
+  --border-exit: solid 1px #e71c4f;
+  --border-radius-exit: 10px;
+
+  --game-player-blue-image: url("/assets/images/shared/chess_pawn_blue.svg");
+  --game-player-orange-image: url("/assets/images/shared/chess_pawn_orange.svg");
 }
 
 .game-screen.theme-da-projects {
@@ -26,6 +54,11 @@
   --game-text: #ffffff;
   --game-accent: #c9a7ff;
   --game-header-bg: #f0f3f4;
+  --border-exit: none;
+  --border-radius-exit: 10px;
+
+  --game-player-blue-image: url("/assets/images/shared/chess_pawn_blue.svg");
+  --game-player-orange-image: url("/assets/images/shared/chess_pawn_orange.svg");
 }
 
 .game-screen.theme-foods {
@@ -33,6 +66,11 @@
   --game-text: #2f1b00;
   --game-accent: #fff2b8;
   --game-header-bg: #f0e5d9;
+  --border-exit: solid 1px #f3832d;
+  --border-radius-exit: 10px;
+
+  --game-player-blue-image: url("/assets/images/shared/chess_pawn_blue.svg");
+  --game-player-orange-image: url("/assets/images/shared/chess_pawn_orange.svg");
 }
 
 .game-screen__dp {
@@ -48,7 +86,7 @@
   gap: 8em;
 
   padding: 0.8em 1em;
-  border-radius: 10px;
+  border-radius: --border-radius-exit;
 }
 
 .game-screen__info-item {
@@ -66,7 +104,7 @@
 .game-screen__exit-content {
   display: flex;
   padding: 0.5em 0.7em;
-  border: solid 2px #e71c4f;
+  border: var(--border-exit);
   border-radius: 8px;
 
   img {
@@ -78,7 +116,7 @@
   display: grid;
   justify-content: center;
   align-content: center;
-  gap: var(--card-gap, 0.7rem);
+  gap: var(--card-gap, 0.5rem);
   grid-template-columns: repeat(var(--board-columns), var(--card-width));
 }
 
@@ -100,20 +138,54 @@
 .memory-card {
   width: var(--card-width);
   aspect-ratio: 3 / 4;
-  overflow: hidden;
-  padding: 0;
 
+  padding: 0;
   background: transparent;
-  border-radius: 0.6rem;
-  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.25);
+  border: none;
+
+  perspective: 1000px;
 }
 
-.memory-card__image {
+.memory-card__inner {
+  position: relative;
+
   width: 100%;
   height: 100%;
   display: block;
+
+  transform-style: preserve-3d;
+  transition: transform 450ms ease;
+}
+
+.memory-card.is-flipped .memory-card__inner,
+.memory-card.is-matched .memory-card__inner {
+  transform: rotateY(180deg);
+}
+
+.memory-card__image {
+  position: absolute;
+  display: block;
   object-fit: cover;
-  border-radius: inherit;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.memory-card__image--back {
+  transform: rotateY(0deg);
+}
+
+.memory-card__image--front {
+  transform: rotateY(180deg);
+}
+
+.memory-card.is-matched {
+  cursor: default;
+}
+
+.memory-card.is-matched .memory-card__image {
+  box-shadow: 0 0 0 3px var(--game-accent);
 }
 
 /* =============================
@@ -123,7 +195,6 @@
 .exit-modal {
   position: fixed;
   inset: 0;
-  z-index: 1000;
 
   display: flex;
   justify-content: center;

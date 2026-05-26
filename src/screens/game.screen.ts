@@ -44,15 +44,21 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   <header class="game-screen__dp">
     <div class="game-screen__header">
       <div class="game-screen__info-item">
-        <div class="game-screen__player-score">
-          <img src="public/assets/images/shared/chess_pawn_blue.svg" alt="" />
-          <strong id="blue-score">0</strong>
-        </div>
+    <div class="game-screen__player-score">
+     <div
+      class="game-screen__player-score-icon game-screen__player-score-icon--blue"
+     aria-hidden="true"
+    ></div>
+  <strong id="blue-score">0</strong>
+</div>
 
-        <div class="game-screen__player-score">
-          <img src="public/assets/images/shared/chess_pawn_orange.svg" alt="" />
-          <strong id="orange-score">0</strong>
-        </div>
+<div class="game-screen__player-score">
+  <div
+    class="game-screen__player-score-icon game-screen__player-score-icon--orange"
+    aria-hidden="true"
+  ></div>
+  <strong id="orange-score">0</strong>
+</div>
       </div>
 
       <div class="game-screen__info-item">
@@ -78,9 +84,25 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     ${cards
       .map((card) => {
         return `
-    <button class="memory-card" type="button" data-card-id="${card.id}">
-      <img src="${card.backImage}" alt="Memory card back" class="memory-card__image" />
-    </button>
+ <button
+  class="memory-card"
+  type="button"
+  data-card-id="${card.id}"
+>
+  <span class="memory-card__inner">
+    <img
+      src="${card.backImage}"
+      alt="Memory card back"
+      class="memory-card__image memory-card__image--back"
+    />
+
+    <img
+      src="${card.image}"
+      alt="Memory card front"
+      class="memory-card__image memory-card__image--front"
+    />
+  </span>
+</button>
     `;
       })
       .join("")}
@@ -167,19 +189,14 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   function flipCard(card: MemoryCard) {
     card.isFlipped = true;
 
-    const image = getCardImage(card.id);
-
-    image.src = card.image;
-    image.alt = "Memory card front";
+    const cardButton = getCardButton(card.id);
+    cardButton.classList.add("is-flipped");
   }
-
   function closeCard(card: MemoryCard) {
     card.isFlipped = false;
 
-    const image = getCardImage(card.id);
-
-    image.src = card.backImage;
-    image.alt = "Memory card back";
+    const cardButton = getCardButton(card.id);
+    cardButton.classList.remove("is-flipped");
   }
 
   function checkOpenCards() {
@@ -309,10 +326,6 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     }
 
     return player;
-  }
-
-  function getCardImage(cardId: number) {
-    return getRequiredElement<HTMLImageElement>(getCardButton(cardId), ".memory-card__image");
   }
 
   function getCardButton(cardId: number) {
