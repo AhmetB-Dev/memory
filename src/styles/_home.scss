@@ -1,0 +1,74 @@
+.home-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4em;
+
+  background-color: #2f3131;
+  background-image: url("/assets/images/base/play-controller.webp");
+  background-size: 25%;
+  background-repeat: no-repeat;
+  background-position: 0% 95%;
+
+  p {
+    margin: 0;
+    color: white;
+    font-size: clamp(2rem, 4vh, 7rem);
+  }
+
+  h1 {
+    margin-top: 6px;
+    margin-bottom: 0;
+    color: white;
+    font-size: clamp(6rem, 7vh, 8rem);
+  }
+}
+
+.home-screen__play-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+
+  padding: 1rem;
+  background-color: #f0ea6e;
+  color: #303131;
+
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: 800;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+
+  img {
+    width: clamp(1rem, 5vw, 3.5rem);
+    transform: rotate(0deg);
+    transition: transform 180ms ease;
+  }
+
+  &:hover {
+    transform: scale(1.04);
+
+    img {
+      transform: rotate(-20deg) translateY(-0.15em);
+    }
+
+    .home-screen__arrow-bg {
+      background-image: url("/assets/images/base/arrow-right-hover.svg");
+    }
+  }
+}
+
+.home-screen__arrow-bg {
+  width: 2rem;
+  height: 3rem;
+  display: inline-block;
+
+  background-image: url("/assets/images/base/arrow-right.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}

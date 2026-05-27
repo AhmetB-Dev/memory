@@ -3,27 +3,5 @@
 @use "./styles/setup";
 @use "./styles/game";
 @use "./styles/result";
-
-body {
-  margin: 0;
-}
-
-section {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-button {
-  border: none;
-  background: transparent;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-input {
-  cursor: pointer;
-}
+@use "./styles/themes/game-themes";
+@use "./styles/themes/result-themes";
