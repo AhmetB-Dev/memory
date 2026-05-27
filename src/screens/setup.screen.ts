@@ -22,7 +22,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
 
   app.innerHTML = `
     <section class="setup-screen">
-      <div style="display: flex; justify-content: space-evenly;align-items: flex-end">
+      <div style="display: flex;     justify-content: space-around;;align-items: flex-end">
         <div class="setup-screen__layout">
           <div class="setup-screen__header">
             <h1 class="setup-screen__title">Settings</h1>

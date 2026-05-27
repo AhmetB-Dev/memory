@@ -43,25 +43,31 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
  <section class="game-screen ${selectedTheme.className}">
   <header class="game-screen__dp">
     <div class="game-screen__header">
-      <div class="game-screen__info-item">
+      <div class="game-screen__info-item game-screen__bg-pd">
     <div class="game-screen__player-score">
      <div
       class="game-screen__player-score-icon game-screen__player-score-icon--blue"
      aria-hidden="true"
     ></div>
+
+     <span class="game-screen__player-score-blue-tx"></span>
+
   <strong id="blue-score">0</strong>
 </div>
 
 <div class="game-screen__player-score">
-  <div
+    <div
     class="game-screen__player-score-icon game-screen__player-score-icon--orange"
     aria-hidden="true"
-  ></div>
-  <strong id="orange-score">0</strong>
-</div>
+    ></div>
+
+  <span class="game-screen__player-score-orange-tx"></span>
+
+     <strong id="orange-score">0</strong>
+    </div>
       </div>
 
-      <div class="game-screen__info-item">
+      <div class="game-screen__info-item ">
         <span>Current player:</span>
         <img
           id="current-player-icon"
@@ -71,10 +77,8 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
         />
       </div>
 
-      <div class="game-screen__exit-content">
-        <div>
-          <img src="/assets/images/themes/gaming/exit.webp" alt="exit" />
-        </div>
+      <div id="exit-game-button" class="game-screen__exit-content">
+        <div class="game-screen__exit-icon game-screen__exit-icon-size"></div>
         <button class="game-screen__exit-button" type="button" id="exit-game-button">Exit game</button>
       </div>
     </div>
