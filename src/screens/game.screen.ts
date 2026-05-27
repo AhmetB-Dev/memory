@@ -67,14 +67,20 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     </div>
       </div>
 
-      <div class="game-screen__info-item ">
+      <div class="game-screen__info-item">
         <span>Current player:</span>
-        <img
-          id="current-player-icon"
-          class="game-screen__current-player-icon"
-          src="${getPlayerIcon(getCurrentPlayer().id)}"
-          alt="${getCurrentPlayer().name} player"
-        />
+
+        <div
+          id="current-player-icon-box"
+          class="game-screen__current-player-icon-box game-screen__current-player-icon-box--${getCurrentPlayer().id}"
+        >
+          <img
+            id="current-player-icon"
+            class="game-screen__current-player-icon"
+            src="${getCurrentPlayerIcon(setup.theme, getCurrentPlayer().id)}"
+            alt="${getCurrentPlayer().name} player"
+          />
+        </div>
       </div>
 
       <div id="exit-game-button" class="game-screen__exit-content">
@@ -256,6 +262,8 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
   function updateScoreBoard() {
     const currentPlayerIcon = getRequiredElement<HTMLImageElement>(app, "#current-player-icon");
 
+    const currentPlayerIconBox = getRequiredElement<HTMLDivElement>(app, "#current-player-icon-box");
+
     const blueScoreElement = getRequiredElement<HTMLElement>(app, "#blue-score");
 
     const orangeScoreElement = getRequiredElement<HTMLElement>(app, "#orange-score");
@@ -264,8 +272,15 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     const orangePlayer = getPlayerById("orange");
     const currentPlayer = getCurrentPlayer();
 
-    currentPlayerIcon.src = getPlayerIcon(currentPlayer.id);
+    currentPlayerIcon.src = getCurrentPlayerIcon(setup.theme, currentPlayer.id);
     currentPlayerIcon.alt = `${currentPlayer.name} player`;
+
+    currentPlayerIconBox.classList.remove(
+      "game-screen__current-player-icon-box--blue",
+      "game-screen__current-player-icon-box--orange",
+    );
+
+    currentPlayerIconBox.classList.add(`game-screen__current-player-icon-box--${currentPlayer.id}`);
 
     blueScoreElement.textContent = String(bluePlayer.score);
     orangeScoreElement.textContent = String(orangePlayer.score);
@@ -407,10 +422,18 @@ function getThemeById(themeId: ThemeKey) {
   return selectedTheme;
 }
 
-function getPlayerIcon(playerId: PlayerKey): string {
+function getCurrentPlayerIcon(themeId: ThemeKey, playerId: PlayerKey): string {
+  if (themeId === "coding") {
+    return getCodingCurrentPlayerIcon(playerId);
+  }
+
+  return "/assets/images/shared/chess_pawn_player.svg";
+}
+
+function getCodingCurrentPlayerIcon(playerId: PlayerKey): string {
   const playerIcons: Record<PlayerKey, string> = {
-    blue: "/assets/images/shared/chess_pawn_blue.svg",
-    orange: "/assets/images/shared/chess_pawn_orange.svg",
+    blue: "/assets/images/themes/coding/label_blue.svg",
+    orange: "/assets/images/themes/coding/label_orange.svg",
   };
 
   return playerIcons[playerId];
