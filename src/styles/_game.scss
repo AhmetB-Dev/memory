@@ -259,10 +259,34 @@
   padding: 1.5rem;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
+
+  animation: exit-modal-fade-in 180ms ease-out both;
 }
 
 .exit-modal[hidden] {
   display: none;
+}
+
+@keyframes exit-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes exit-modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .exit-modal__content {
@@ -273,6 +297,8 @@
   background-color: #f6f6f6;
   color: #303131;
   text-align: center;
+
+  animation: exit-modal-slide-up 260ms ease-out both;
 
   h2 {
     margin: 0 0 0.75rem;

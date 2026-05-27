@@ -94,11 +94,11 @@ export function renderResultScreen(
           ${winner.name} Player
         </h1>
 
-        <img
+        <div
           class="result-screen__winner-image"
-          src="${getWinnerImage(result.theme, winner.id)}"
-          alt="${winner.name} player"
-        />
+          role="img"
+          aria-label="${winner.name} player"
+        ></div>
 
         ${createResultActionsHtml()}
       </section>
@@ -116,11 +116,11 @@ export function renderResultScreen(
           DRAW
         </h1>
 
-        <img
+        <div
           class="result-screen__draw-image"
-          src="${getDrawImage(result.theme)}"
-          alt="Draw"
-        />
+          role="img"
+          aria-label="Draw"
+        ></div>
 
         ${createResultActionsHtml()}
       </section>
@@ -180,40 +180,6 @@ function createConfettiHtml(theme: ThemeKey) {
       alt=""
     />
   `;
-}
-
-function getWinnerImage(theme: ThemeKey, playerId: "blue" | "orange") {
-  const images: Record<ThemeKey, Record<"blue" | "orange", string>> = {
-    coding: {
-      blue: "/assets/images/themes/coding/Player.png",
-      orange: "/assets/images/themes/coding/Player%20(1).png",
-    },
-    gaming: {
-      blue: "/assets/images/themes/gaming/pockal%201.png",
-      orange: "/assets/images/themes/gaming/pockal%201.png",
-    },
-    "da-projects": {
-      blue: "/assets/images/themes/da-projects/Player%20(3).png",
-      orange: "/assets/images/themes/da-projects/Player%20(2).png",
-    },
-    foods: {
-      blue: "/assets/images/themes/foods/Player%20illustration.png",
-      orange: "/assets/images/themes/foods/Frame%20739.png",
-    },
-  };
-
-  return images[theme][playerId];
-}
-
-function getDrawImage(theme: ThemeKey) {
-  const images: Record<ThemeKey, string> = {
-    coding: "/assets/images/themes/coding/Scale_Icon.png",
-    gaming: "/assets/images/themes/gaming/Scale_Icon%20(3).png",
-    "da-projects": "/assets/images/themes/da-projects/Scale_icon%20(1).png",
-    foods: "/assets/images/themes/foods/scale_icon%20(2).png",
-  };
-
-  return images[theme];
 }
 
 function getPlayerById(players: ResultPlayer[], playerId: "blue" | "orange") {

@@ -65,7 +65,20 @@
 .result-screen__draw-image {
   width: clamp(5rem, 12vw, 10rem);
   margin-top: 1.5rem;
-  object-fit: contain;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.result-screen__winner-image {
+  aspect-ratio: 4 / 5;
+  background-image: var(--result-winner-image);
+}
+
+.result-screen__draw-image {
+  aspect-ratio: 5 / 4;
+  background-image: var(--result-draw-image);
 }
 
 .result-screen__confetti {
@@ -113,10 +126,16 @@
 
 .result-screen--coding.result-screen--orange {
   --result-title: #ff8a26;
+  --result-winner-image: url("/assets/images/themes/coding/player_orange.webp");
 }
 
 .result-screen--coding.result-screen--blue {
   --result-title: #28aefc;
+  --result-winner-image: url("/assets/images/themes/coding/player_blue.webp");
+}
+
+.result-screen--coding.result-screen--draw {
+  --result-draw-image: url("/assets/images/themes/coding/Scale_Icon.png");
 }
 
 .result-screen--gaming {
@@ -128,12 +147,20 @@
   --result-button-text: #ffffff;
 }
 
+.result-screen--gaming.result-screen--winner {
+  --result-winner-image: url("/assets/images/themes/gaming/pockal.webp");
+}
+
 .result-screen--gaming.result-screen--orange {
   --result-title: #ff8426;
 }
 
 .result-screen--gaming.result-screen--blue {
   --result-title: #1ea7ff;
+}
+
+.result-screen--gaming.result-screen--draw {
+  --result-draw-image: url("/assets/images/themes/gaming/Scale_Icon.webp");
 }
 
 .result-screen--da-projects {
@@ -148,6 +175,18 @@
 .result-screen--da-projects.result-screen--orange,
 .result-screen--da-projects.result-screen--blue {
   --result-title: #ffffff;
+}
+
+.result-screen--da-projects.result-screen--orange {
+  --result-winner-image: url("/assets/images/themes/da-projects/Player_orange.webp");
+}
+
+.result-screen--da-projects.result-screen--blue {
+  --result-winner-image: url("/assets/images/themes/da-projects/Player_blue.webp");
+}
+
+.result-screen--da-projects.result-screen--draw {
+  --result-draw-image: url("/assets/images/themes/da-projects/Scale_icon%20(1).png");
 }
 
 .result-screen--foods {
@@ -167,6 +206,15 @@
   --result-title: #d46f28;
 }
 
+.result-screen--foods.result-screen--orange {
+  --result-winner-image: url("/assets/images/themes/foods/payer_win_orange.webp");
+}
+
 .result-screen--foods.result-screen--blue {
   --result-title: #1686c4;
+  --result-winner-image: url("/assets/images/themes/foods/player_win_blue.webp");
+}
+
+.result-screen--foods.result-screen--draw {
+  --result-draw-image: url("/assets/images/themes/foods/scale_icon.webp");
 }
