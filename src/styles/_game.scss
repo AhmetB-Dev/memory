@@ -8,7 +8,7 @@
 
   .game-screen__header {
     background-color: var(--game-header-bg);
-    border-radius: var(--border-radius-exit);
+    border-radius: var(--game-header-radius);
   }
 }
 
@@ -60,7 +60,7 @@
 }
 
 .game-screen__exit-icon {
-  background-image: var(--game-exit-icon);
+  background-image: var(--exit-icon-image);
 }
 
 .game-screen__dp {
@@ -76,14 +76,14 @@
   gap: 8em;
 
   padding: 0.8em 1em;
-  border-radius: var(--border-radius-exit);
+  border-radius: var(--game-header-radius);
 }
 
 .game-screen__info-item {
   display: flex;
   align-items: center;
   gap: 1.5em;
-  color: var(--color-exits-txt);
+  color: var(--game-header-text);
 }
 
 .game-screen__current-player-icon-box {
@@ -118,12 +118,13 @@
 .game-screen__exit-content {
   display: flex;
   padding: 0.6em 0.7em;
-  border: var(--border-exit);
-  border-radius: var(--border-radius-exit);
+  border: var(--exit-trigger-border, none);
+  border-radius: var(--exit-trigger-radius);
   cursor: pointer;
-  background-color: var(--bg-color-exit-btn);
+  background-color: var(--exit-trigger-bg, transparent);
+
   button {
-    color: var(--color-exits-txt);
+    color: var(--exit-trigger-text);
     font-family: var(--font-txt);
   }
 
@@ -257,28 +258,28 @@
   width: min(90vw, 420px);
   padding: 2rem;
   font-family: var(--font-txt);
-  background-color: #f6f6f6;
-  color: #303131;
+  background-color: var(--exit-modal-panel-bg, #f6f6f6);
+  color: var(--exit-modal-panel-text, #303131);
   text-align: center;
-  border-radius: var(--exit-border-radius);
+  border-radius: var(--exit-modal-radius, 0);
   animation: exit-modal-slide-up 260ms ease-out both;
 
   h2 {
     margin: 0;
     font-size: clamp(1.8rem, 4vw, 3rem);
-    color: var(--txt-color-exit);
+    color: var(--exit-modal-title);
   }
 }
 
 #back-to-game-button {
-  background-color: var(--back-exit-btn-model);
-  color: var(--back-exit-txt-color);
+  background-color: var(--exit-back-bg);
+  color: var(--exit-back-text);
 }
 
 #confirm-exit-button {
-  background-color: var(--confirm-exit-btn-model);
-  color: var(--confirm-exit-txt-color);
-  border: var(--confirm-exit-border-color);
+  background-color: var(--exit-confirm-bg);
+  color: var(--exit-confirm-text);
+  border: var(--exit-confirm-border, none);
 }
 
 .exit-modal__actions {
@@ -290,7 +291,7 @@
 
 .exit-modal__button {
   padding: 0.9rem 1.4rem;
-  border-radius: var(--exit-border-radius);
+  border-radius: var(--exit-modal-radius, 0);
   background-color: #f0ea6e;
 
   font-size: 1rem;

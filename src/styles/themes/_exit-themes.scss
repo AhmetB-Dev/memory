@@ -1,0 +1,75 @@
+.game-screen.theme-coding {
+  --exit-trigger-border: solid 1px #4dd5bc;
+  --exit-trigger-radius: 0;
+  --exit-trigger-bg: transparent;
+  --exit-trigger-text: #ffffff;
+  --exit-icon-image: url("/assets/images/themes/coding/exit.webp");
+
+  --exit-modal-panel-bg: #f6f6f6;
+  --exit-modal-panel-text: #303131;
+  --exit-modal-title: #303131;
+  --exit-modal-radius: 0;
+
+  --exit-back-bg: #66cfbc;
+  --exit-back-text: #ffffff;
+  --exit-confirm-bg: #ffffff;
+  --exit-confirm-text: #4dd5bc;
+  --exit-confirm-border: solid 2px #4dd5bc;
+}
+
+.game-screen.theme-gaming {
+  --exit-trigger-border: solid 1px #e71c4f;
+  --exit-trigger-radius: 10px;
+  --exit-trigger-bg: #fd96c933;
+  --exit-trigger-text: #294f60;
+  --exit-icon-image: url("/assets/images/themes/gaming/exit.webp");
+
+  --exit-modal-panel-bg: #f6f6f6;
+  --exit-modal-panel-text: #303131;
+  --exit-modal-title: #ffab3e;
+  --exit-modal-radius: 14px;
+
+  --exit-back-bg: #ed1b76;
+  --exit-back-text: #ffffff;
+  --exit-confirm-bg: #ffffff;
+  --exit-confirm-text: #ed1b76;
+  --exit-confirm-border: solid 2px #ed1b76;
+}
+
+.game-screen.theme-da-projects {
+  --exit-trigger-border: none;
+  --exit-trigger-radius: 10px;
+  --exit-trigger-bg: #bfe5f2;
+  --exit-trigger-text: #1e7594;
+  --exit-icon-image: url("/assets/images/themes/da-projects/exit.svg");
+
+  --exit-modal-panel-bg: #f6f6f6;
+  --exit-modal-panel-text: #303131;
+  --exit-modal-title: #294f60;
+  --exit-modal-radius: 14px;
+
+  --exit-back-bg: #bfe5f2;
+  --exit-back-text: #1e7594;
+  --exit-confirm-bg: #fd8a81;
+  --exit-confirm-text: #ffffff;
+  --exit-confirm-border: none;
+}
+
+.game-screen.theme-foods {
+  --exit-trigger-border: solid 1px #f3832d;
+  --exit-trigger-radius: 10px;
+  --exit-trigger-bg: #fff9f2;
+  --exit-trigger-text: #f3832d;
+  --exit-icon-image: url("/assets/images/themes/foods/exit.svg");
+
+  --exit-modal-panel-bg: #fff9f2;
+  --exit-modal-panel-text: #2f1b00;
+  --exit-modal-title: #ff8426;
+  --exit-modal-radius: 14px;
+
+  --exit-back-bg: #ffab3e;
+  --exit-back-text: #ffffff;
+  --exit-confirm-bg: #ffffff;
+  --exit-confirm-text: #f3832d;
+  --exit-confirm-border: solid 2px #f3832d;
+}

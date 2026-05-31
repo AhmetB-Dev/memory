@@ -3,29 +3,23 @@
   --game-text: #ffffff;
   --game-accent: #f0ea6e;
   --game-header-bg: #303131;
-  --border-exit: solid 1px #4dd5bc;
-  --border-radius-exit: 0;
-  --color-exits-txt: #ffffff;
+  --game-header-text: #ffffff;
+  --game-header-radius: 0;
+
   --txt-name-orange: "Orange";
   --txt-name-blue: "Blue";
-  --bg-score-br: 0px;
+  --bg-score: #86e9d633;
+  --bg-score-br: 0;
+
   --current-player-blue-bg: transparent;
   --current-player-orange-bg: transparent;
   --current-player-icon-box-radius: 0;
   --current-player-icon-size: 2.8rem;
-  --font-txt: "redRose";
-  --txt-color-exit: #303131;
-  --back-exit-btn-model: #66cfbc;
-  --back-exit-txt-color: white;
 
-  --confirm-exit-txt-color: #4dd5bc;
-  --confirm-exit-border-color: solid 2px #4dd5bc;
-  ---exit-border-radius: 0;
+  --font-txt: "redRose";
 
   --game-player-blue-image: url("/assets/images/themes/coding/label_blue.svg");
   --game-player-orange-image: url("/assets/images/themes/coding/label_orange.svg");
-  --game-exit-icon: url("/assets/images/themes/coding/exit.webp");
-  --bg-score: #86e9d633;
 }
 
 .game-screen.theme-gaming {
@@ -33,26 +27,20 @@
   --game-text: #ffffff;
   --game-accent: #6ee7f0;
   --game-header-bg: #545d75;
-  --border-exit: solid 1px #e71c4f;
-  --color-exits-txt: #294f60;
-  --border-radius-exit: 10px;
+  --game-header-text: #294f60;
+  --game-header-radius: 10px;
+
+  --txt-name-orange: "Orange";
+  --txt-name-blue: "Blue";
+  --bg-score: #ffffff;
   --bg-score-br: 8px;
+
   --current-player-blue-bg: #2bb1ff;
   --current-player-orange-bg: #f58e39;
   --font-txt: "orbitron";
-  --bg-color-exit-btn: #fd96c933;
-  --txt-color-exit: #ffab3e;
-  --back-exit-btn-model: #ed1b76;
-  --back-exit-txt-color: white;
-
-  --confirm-exit-txt-color: #ed1b76;
-  --confirm-exit-border-color: solid 2px #ed1b76;
-  --exit-border-radius: 14px;
 
   --game-player-blue-image: url("/assets/images/shared/chess_pawn_blue.svg");
   --game-player-orange-image: url("/assets/images/shared/chess_pawn_orange.svg");
-  --game-exit-icon: url("/assets/images/themes/gaming/exit.webp");
-  --bg-score: white;
 }
 
 .game-screen.theme-da-projects {
@@ -60,27 +48,20 @@
   --game-text: #ffffff;
   --game-accent: #c9a7ff;
   --game-header-bg: #f0f3f4;
-  --color-exits-txt: #1e7594;
-  --border-exit: none;
-  --border-radius-exit: 10px;
-  --bg-score: white;
+  --game-header-text: #1e7594;
+  --game-header-radius: 10px;
+
+  --txt-name-orange: "Orange";
+  --txt-name-blue: "Blue";
+  --bg-score: #ffffff;
   --bg-score-br: 8px;
+
   --current-player-blue-bg: #2bb1ff;
   --current-player-orange-bg: #f58e39;
   --font-txt: "figTree";
 
-  --bg-color-exit-btn: #bfe5f2;
-  --txt-color-exit: #294f60;
-  --back-exit-btn-model: #bfe5f2;
-  --back-exit-txt-color: #1e7594;
-  --confirm-exit-btn-model: #fd8a81;
-  --confirm-exit-txt-color: #ffffff;
-  --confirm-exit-border-color: none;
-  --exit-border-radius: 14px;
-
   --game-player-blue-image: url("/assets/images/shared/chess_pawn_blue.svg");
   --game-player-orange-image: url("/assets/images/shared/chess_pawn_orange.svg");
-  --game-exit-icon: url("/assets/images/themes/da-projects/exit.svg");
 }
 
 .game-screen.theme-foods {
@@ -88,25 +69,18 @@
   --game-text: #2f1b00;
   --game-accent: #fff2b8;
   --game-header-bg: #f0e5d9;
-  --border-exit: solid 1px #f3832d;
-  --color-exits-txt: #f3832d;
-  --border-radius-exit: 10px;
-  --bg-score: white;
+  --game-header-text: #f3832d;
+  --game-header-radius: 10px;
+
+  --txt-name-orange: "Orange";
+  --txt-name-blue: "Blue";
+  --bg-score: #ffffff;
   --bg-score-br: 8px;
+
   --current-player-blue-bg: #2bb1ff;
   --current-player-orange-bg: #f58e39;
   --font-txt: "kleeOne";
 
-  --txt-color-exit: #ffab3e;
-  --bg-color-exit-btn: #bfe5f2;
-  --back-exit-btn-model: #ffab3e;
-  --back-exit-txt-color: white;
-  --confirm-exit-btn-model: #fff9f2;
-  --confirm-exit-txt-color: #f3832d;
-  --confirm-exit-border-color: solid 2px #f3832d;
-  --exit-border-radius: 14px;
-
   --game-player-blue-image: url("/assets/images/shared/chess_pawn_blue.svg");
   --game-player-orange-image: url("/assets/images/shared/chess_pawn_orange.svg");
-  --game-exit-icon: url("/assets/images/themes/foods/exit.svg");
 }
