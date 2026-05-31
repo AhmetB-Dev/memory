@@ -20,11 +20,6 @@
   font-size: clamp(2.8rem, 7vw, 6rem);
   font-weight: 800;
   text-transform: uppercase;
-  text-shadow: var(--result-shadow);
-}
-
-.result-screen__final-score {
-  font-family: var(--font-txt);
 }
 
 .result-screen__subtitle {
@@ -36,6 +31,7 @@
 
 .result-screen__final-score {
   margin-top: 2rem;
+  font-family: var(--font-txt);
 
   p {
     margin: 0 0 0.4rem;

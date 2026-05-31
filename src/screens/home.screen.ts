@@ -9,7 +9,7 @@ export function renderHomeScreen(app: HTMLDivElement) {
 
       <button class="home-screen__play-button" type="button" id="play-button">
         <img 
-          src="/assets/images/base/play-controller.svg"" 
+          src="/assets/images/base/play-controller.svg" 
           alt="" 
           class="home-screen__play-icon"
         />
@@ -19,7 +19,7 @@ export function renderHomeScreen(app: HTMLDivElement) {
     </section>
   `;
 
-  const playButton = document.querySelector<HTMLButtonElement>("#play-button");
+  const playButton = app.querySelector<HTMLButtonElement>("#play-button");
 
   if (!playButton) {
     throw new Error("Play button not found");

@@ -22,7 +22,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
 
   app.innerHTML = `
     <section class="setup-screen">
-      <div style="display: flex;     justify-content: space-around;;align-items: flex-end">
+      <div class="setup-screen__content">
         <div class="setup-screen__layout">
           <div class="setup-screen__header">
             <h1 class="setup-screen__title">Settings</h1>
@@ -171,8 +171,6 @@ export function renderSetupScreen(app: HTMLDivElement) {
 
   const startButton = getRequiredElement<HTMLButtonElement>(app, "#start-button");
 
-  const summaryContent = getRequiredElement<HTMLElement>(app, "#summary-content");
-
   const summaryTheme = getRequiredElement<HTMLElement>(app, "#summary-theme");
 
   const summaryPlayer = getRequiredElement<HTMLElement>(app, "#summary-player");
@@ -232,8 +230,6 @@ export function renderSetupScreen(app: HTMLDivElement) {
     const isComplete = isSetupComplete();
 
     startButton.disabled = !isComplete;
-
-    summaryContent.classList.toggle("setup-screen__summary-content--complete", isComplete);
 
     updateDividerImages(isComplete);
   }

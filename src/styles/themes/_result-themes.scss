@@ -4,7 +4,7 @@
   --result-subtitle: #ffffff;
   --result-title: #58e0ca;
   --font-txt: "redRose";
-  --result-shadow: 4px -2px 0px #9ff5e8, 8px 8px 12px rgb(248 248 248 / 0%);
+  --result-shadow: 2px -1px 0px #9ff5e8, 8px 8px 12px rgb(248 248 248 / 0%);
   --result-button-bg: #86e9d633;
   --result-button-text: #ffffff;
   --result-border: solid 2px #4dd5bc;
@@ -22,7 +22,7 @@
 
 .result-screen--coding.result-screen--draw {
   --result-title: #4dd5bc;
-
+  text-shadow: var(--result-shadow);
   --result-draw-image: url("/assets/images/themes/coding/Scale_Icon.png");
 }
 
@@ -57,7 +57,7 @@
 
 .result-screen--da-projects {
   --result-bg: #23819a;
-  --font-txt: "figtree";
+  --font-txt: "figTree";
   --result-text: #ffffff;
   --result-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25), 8px 8px 12px rgb(248 248 248 / 0%);
   --result-subtitle: #ffffff;
@@ -107,7 +107,7 @@
 }
 
 .result-screen--foods.result-screen--orange {
-  -result-title: #a45212;
+  --result-title: #a45212;
   --result-winner-image: url("/assets/images/themes/foods/payer_win_orange.webp");
 }
 

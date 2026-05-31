@@ -17,7 +17,7 @@
   h1 {
     margin: 0;
     font-size: clamp(2rem, 4vh, 7rem);
-    font-family: "RedRose";
+    font-family: "redRose";
   }
 
   img {
@@ -38,12 +38,6 @@
     width: 20px;
     height: 20px;
   }
-}
-
-.setup-group__title {
-  display: flex;
-  align-items: baseline;
-  gap: 1em;
 }
 
 .setup-group__content {
@@ -84,7 +78,7 @@
   display: flex;
   align-items: center;
   background-color: #f6f6f6;
-  font-family: "Almarai", sans-serif;
+  font-family: "almarai", sans-serif;
 }
 
 .setup-option {
@@ -142,43 +136,10 @@
   background-color: #f6f6f6;
 }
 
-.setup-screen__divider {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .setup-screen__decoration-icon {
   display: block;
   width: 1.2em;
   height: 3.8rem;
-}
-
-.setup-screen__decoration-line {
-  position: absolute;
-  width: 1.2em;
-  height: 3.8rem;
-
-  opacity: 0;
-  object-fit: contain;
-  transform: rotate(15deg) scaleY(0);
-  transform-origin: center;
-
-  transition:
-    opacity 180ms ease,
-    transform 260ms ease;
-}
-
-.setup-screen__summary-content--complete {
-  .setup-screen__decoration-line {
-    opacity: 1;
-    transform: rotate(15deg) scaleY(1);
-  }
-
-  .setup-screen__divider:nth-of-type(2) .setup-screen__decoration-line {
-    transition-delay: 80ms;
-  }
 }
 
 .setup-screen__start-button {
