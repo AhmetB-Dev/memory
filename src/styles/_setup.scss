@@ -17,6 +17,7 @@
   h1 {
     margin: 0;
     font-size: clamp(2rem, 4vh, 7rem);
+    font-family: "RedRose";
   }
 
   img {
@@ -51,6 +52,7 @@
 
   h2 {
     margin-bottom: 0.5em;
+    font-family: "almarai";
   }
 }
 
@@ -82,6 +84,11 @@
   display: flex;
   align-items: center;
   background-color: #f6f6f6;
+  font-family: "Almarai", sans-serif;
+}
+
+.setup-option {
+  font-family: "almarai";
 }
 
 .setup-screen__summary-item {
@@ -138,7 +145,7 @@
   padding: 1em;
   background-color: #f0ea6e;
   color: #303131;
-
+  font-family: "redRose";
   font-weight: 800;
 
   transition:

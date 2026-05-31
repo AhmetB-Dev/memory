@@ -50,7 +50,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
      aria-hidden="true"
     ></div>
 
-     <span class="game-screen__player-score-blue-tx"></span>
+     <span class="game-screen__player-score-blue-txt"></span>
 
   <strong id="blue-score">0</strong>
 </div>
@@ -61,7 +61,7 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
     aria-hidden="true"
     ></div>
 
-  <span class="game-screen__player-score-orange-tx"></span>
+  <span class="game-screen__player-score-orange-txt"></span>
 
      <strong id="orange-score">0</strong>
     </div>
@@ -120,15 +120,13 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
 
   <div class="exit-modal" id="exit-modal" hidden>
     <div class="exit-modal__content">
-      <h2>Exit game?</h2>
-
-      <p>Your current game will be lost.</p>
+      <h2>Are you sure you want to quit the game?</h2>
 
       <div class="exit-modal__actions">
-        <button class="exit-modal__button" type="button" id="back-to-game-button">Back to game</button>
+        <button class="exit-modal__button" type="button" id="back-to-game-button">No, Back to game</button>
 
         <button class="exit-modal__button exit-modal__button--danger" type="button" id="confirm-exit-button">
-          Exit game
+          Yes, quit game
         </button>
       </div>
     </div>

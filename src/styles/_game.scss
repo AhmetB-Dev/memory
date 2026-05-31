@@ -2,6 +2,10 @@
   background: var(--game-bg);
   color: var(--game-text);
 
+  span {
+    font-family: var(--font-txt);
+  }
+
   .game-screen__header {
     background-color: var(--game-header-bg);
     border-radius: var(--border-radius-exit);
@@ -9,28 +13,34 @@
 }
 
 .game-screen__player-score-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.2rem;
 
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
+  img {
+    width: 2em;
+  }
 }
 
 .game-screen__player-score-icon--blue {
   background-image: var(--game-player-blue-image);
 }
 
-.game-screen__player-score-blue-tx::after {
-  content: var(--tx-name-blue);
+.game-screen__player-score-blue-txt::after {
+  content: var(--txt-name-blue);
+  color: #2bb1ff;
 }
 
 .game-screen__player-score-icon--orange {
   background-image: var(--game-player-orange-image);
 }
 
-.game-screen__player-score-orange-tx::after {
-  content: var(--tx-name-orange);
+.game-screen__player-score-orange-txt::after {
+  content: var(--txt-name-orange);
+  color: #f58e39;
 }
 
 #orange-score {
@@ -42,7 +52,7 @@
 }
 
 .game-screen__exit-icon-size {
-  width: 1.4rem;
+  width: 1em;
 
   background-repeat: no-repeat;
   background-position: center;
@@ -73,17 +83,16 @@
   display: flex;
   align-items: center;
   gap: 1.5em;
+  color: var(--color-exits-txt);
 }
 
 .game-screen__current-player-icon-box {
-  width: 2.3rem;
-  height: 2.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  padding: var(--current-player-icon-box-padding, 0.25rem);
-  border-radius: var(--current-player-icon-box-radius, 0.5rem);
+  padding: 0.4em;
+  border-radius: var(--current-player-icon-box-radius);
 }
 
 .game-screen__current-player-icon-box--blue {
@@ -94,17 +103,9 @@
   background-color: var(--current-player-orange-bg);
 }
 
-.game-screen__current-player-icon {
-  width: var(--current-player-icon-size, 100%);
-  height: var(--current-player-icon-size, 100%);
-
-  display: block;
-  object-fit: contain;
-}
-
 .game-screen__bg-pd {
   background-color: var(--bg-score);
-  padding: 0.4em;
+  padding: 0.8em;
   border-radius: var(--bg-score-br);
 }
 
@@ -120,9 +121,10 @@
   border: var(--border-exit);
   border-radius: var(--border-radius-exit);
   cursor: pointer;
-
+  background-color: var(--bg-color-exit-btn);
   button {
-    color: var(--color-exits-tx);
+    color: var(--color-exits-txt);
+    font-family: var(--font-txt);
   }
 
   img {
@@ -254,23 +256,29 @@
 .exit-modal__content {
   width: min(90vw, 420px);
   padding: 2rem;
-  border-radius: 1.5rem;
-
+  font-family: var(--font-txt);
   background-color: #f6f6f6;
   color: #303131;
   text-align: center;
-
+  border-radius: var(--exit-border-radius);
   animation: exit-modal-slide-up 260ms ease-out both;
 
   h2 {
-    margin: 0 0 0.75rem;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-  }
-
-  p {
     margin: 0;
-    font-size: 1rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--txt-color-exit);
   }
+}
+
+#back-to-game-button {
+  background-color: var(--back-exit-btn-model);
+  color: var(--back-exit-txt-color);
+}
+
+#confirm-exit-button {
+  background-color: var(--confirm-exit-btn-model);
+  color: var(--confirm-exit-txt-color);
+  border: var(--confirm-exit-border-color);
 }
 
 .exit-modal__actions {
@@ -282,8 +290,7 @@
 
 .exit-modal__button {
   padding: 0.9rem 1.4rem;
-  border-radius: 999px;
-
+  border-radius: var(--exit-border-radius);
   background-color: #f0ea6e;
 
   font-size: 1rem;
