@@ -88,7 +88,51 @@
 }
 
 .setup-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  width: fit-content;
+
   font-family: "almarai";
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 2.2em;
+      height: 0.75em;
+
+      background-image: url("/assets/images/setting/arrow-line-short.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+
+      opacity: 0;
+      transform: translateX(-0.35em);
+
+      transition:
+        opacity 180ms ease,
+        transform 180ms ease;
+    }
+  }
+
+  input:checked + span {
+    font-weight: 700;
+
+    &::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 .setup-screen__summary-item {
