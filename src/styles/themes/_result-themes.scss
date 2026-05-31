@@ -1,12 +1,13 @@
-/* Result Themes */
-
 .result-screen--coding {
   --result-bg: #303131;
   --result-text: #ffffff;
   --result-subtitle: #ffffff;
   --result-title: #58e0ca;
-  --result-button-bg: #6fa194;
+  --font-txt: "redRose";
+  --result-shadow: 4px -2px 0px #9ff5e8, 8px 8px 12px rgb(248 248 248 / 0%);
+  --result-button-bg: #86e9d633;
   --result-button-text: #ffffff;
+  --result-border: solid 2px #4dd5bc;
 }
 
 .result-screen--coding.result-screen--orange {
@@ -20,16 +21,22 @@
 }
 
 .result-screen--coding.result-screen--draw {
+  --result-title: #4dd5bc;
+
   --result-draw-image: url("/assets/images/themes/coding/Scale_Icon.png");
 }
 
 .result-screen--gaming {
   --result-bg: #275568;
   --result-text: #ffffff;
+  --font-txt: "orbitron";
+  --result-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25), 8px 8px 12px rgb(248 248 248 / 0%);
   --result-subtitle: #ffffff;
   --result-title: #ff258b;
-  --result-button-bg: #a24685;
+  --result-button-bg: #ed1b7614;
   --result-button-text: #ffffff;
+  --result-border: solid 2px rgba(231, 28, 79, 1);
+  --result-border-radius: 4px;
 }
 
 .result-screen--gaming.result-screen--winner {
@@ -50,11 +57,15 @@
 
 .result-screen--da-projects {
   --result-bg: #23819a;
+  --font-txt: "figtree";
   --result-text: #ffffff;
+  --result-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25), 8px 8px 12px rgb(248 248 248 / 0%);
   --result-subtitle: #ffffff;
   --result-title: #ff5f59;
-  --result-button-bg: #dff8ff;
+  --result-button-bg: #bfe5f2;
   --result-button-text: #23819a;
+  --result-border: none;
+  --result-border-radius: 4px;
 }
 
 .result-screen--da-projects.result-screen--orange,
@@ -77,10 +88,14 @@
 .result-screen--foods {
   --result-bg: #ff8426;
   --result-text: #ffffff;
+  --result-shadow: none;
+  --font-txt: "kleeOne";
   --result-subtitle: #ffffff;
   --result-title: #ffffff;
-  --result-button-bg: #ff8426;
+  --result-button-bg: #f3832d;
   --result-button-text: #ffffff;
+  --result-border-radius: 4px;
+  --result-border: none;
 }
 
 .result-screen--foods.result-screen--winner,
@@ -92,14 +107,16 @@
 }
 
 .result-screen--foods.result-screen--orange {
+  -result-title: #a45212;
   --result-winner-image: url("/assets/images/themes/foods/payer_win_orange.webp");
 }
 
 .result-screen--foods.result-screen--blue {
-  --result-title: #1686c4;
+  --result-title: #a45212;
   --result-winner-image: url("/assets/images/themes/foods/player_win_blue.webp");
 }
 
 .result-screen--foods.result-screen--draw {
+  --result-title: #f3832d;
   --result-draw-image: url("/assets/images/themes/foods/scale_icon.webp");
 }

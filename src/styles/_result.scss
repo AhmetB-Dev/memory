@@ -16,16 +16,22 @@
 .result-screen__title {
   margin: 0;
   color: var(--result-title);
+  font-family: var(--font-txt);
   font-size: clamp(2.8rem, 7vw, 6rem);
   font-weight: 800;
   text-transform: uppercase;
+  text-shadow: var(--result-shadow);
+}
+
+.result-screen__final-score {
+  font-family: var(--font-txt);
 }
 
 .result-screen__subtitle {
-  margin: 0 0 0.4rem;
+  margin: 0;
   color: var(--result-subtitle);
-  font-size: clamp(0.9rem, 1.4vw, 1.3rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 3.4vw, 4.3rem);
+  font-family: var(--font-txt);
 }
 
 .result-screen__final-score {
@@ -65,19 +71,20 @@
 .result-screen__draw-image {
   width: clamp(5rem, 12vw, 10rem);
   margin-top: 1.5rem;
-
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
 
 .result-screen__winner-image {
-  aspect-ratio: 4 / 5;
+  width: 19em;
+  height: 17em;
   background-image: var(--result-winner-image);
 }
 
 .result-screen__draw-image {
-  aspect-ratio: 5 / 4;
+  width: 19em;
+  height: 17em;
   background-image: var(--result-draw-image);
 }
 
@@ -100,9 +107,9 @@
 
 .result-screen__button {
   padding: 0.65rem 1rem;
-  border-radius: 0.35rem;
-
+  border-radius: var(--result-border-radius);
   background: var(--result-button-bg);
+  border: var(--result-border);
   color: var(--result-button-text);
 
   font-size: 0.8rem;

@@ -123,7 +123,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
             <div>
               <div class="setup-screen__summary-content" id="summary-content">
                 <div class="setup-screen__summary-item">
-                  <strong id="summary-theme">Code vibes theme</strong>
+                  <span id="summary-theme">Code vibes theme</span>
                 </div>
 
                 <img
@@ -134,7 +134,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
                 />
 
                 <div class="setup-screen__summary-item">
-                  <strong id="summary-player">Player</strong>
+                  <span id="summary-player">Player</span>
                 </div>
 
                 <img
@@ -145,7 +145,7 @@ export function renderSetupScreen(app: HTMLDivElement) {
                 />
 
                 <div class="setup-screen__summary-item">
-                  <strong id="summary-board-size">Board size</strong>
+                  <span id="summary-board-size">Board size</span>
                 </div>
 
                 <button

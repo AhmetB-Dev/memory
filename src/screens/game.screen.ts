@@ -83,9 +83,9 @@ export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions:
         </div>
       </div>
 
-      <div class="game-screen__exit-content">
+      <div class="game-screen__exit-content" id="exit-game-button">
         <div class="game-screen__exit-icon game-screen__exit-icon-size"></div>
-        <button class="game-screen__exit-button" type="button" id="exit-game-button">Exit game</button>
+        <button class="game-screen__exit-button" type="button" >Exit game</button>
       </div>
     </div>
   </header>
