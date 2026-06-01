@@ -1,14 +1,13 @@
-import type { ThemeKey } from "./game.screen";
+import type { Player, ThemeKey } from "../models/game.model";
+import { getRequiredElement } from "../utils/html";
+import { getPlayerById } from "./game.helpers";
+import { createDrawHtml, createGameOverHtml, createWinnerHtml } from "./result.template";
 
-export type ResultPlayer = {
-  id: "blue" | "orange";
-  name: string;
-  score: number;
-};
+export type ResultPlayer = Player;
 
 type ResultScreenData = {
-  players: ResultPlayer[];
-  winners: ResultPlayer[];
+  players: Player[];
+  winners: Player[];
   isTie: boolean;
   theme: ThemeKey;
 };
@@ -18,178 +17,74 @@ type ResultScreenActions = {
   onHome: () => void;
 };
 
+type ResultContext = {
+  app: HTMLDivElement;
+  result: ResultScreenData;
+  actions: ResultScreenActions;
+  bluePlayer: Player;
+  orangePlayer: Player;
+  timeoutId?: number;
+};
+
 const GAME_OVER_DURATION_IN_MS = 2500;
 
-export function renderResultScreen(
-  app: HTMLDivElement,
-  result: ResultScreenData,
-  actions: ResultScreenActions,
-) {
-  const bluePlayer = getPlayerById(result.players, "blue");
-  const orangePlayer = getPlayerById(result.players, "orange");
+export function renderResultScreen(app: HTMLDivElement, result: ResultScreenData, actions: ResultScreenActions) {
+  const context = createResultContext(app, result, actions);
 
-  let timeoutId: number | undefined;
-
-  renderGameOverScreen();
-
-  timeoutId = window.setTimeout(() => {
-    renderFinalResultScreen();
-  }, GAME_OVER_DURATION_IN_MS);
-
-  function renderGameOverScreen() {
-    app.innerHTML = `
-      <section
-        class="result-screen result-screen--${result.theme} result-screen--game-over"
-        id="game-over-screen"
-      >
-        <h1 class="result-screen__title">GAME OVER</h1>
-
-        <div class="result-screen__final-score">
-          <p>Final score</p>
-
-          <div class="result-screen__score-row">
-            <span class="result-screen__score result-screen__score--blue">
-              Blue ${bluePlayer.score}
-            </span>
-
-            <span class="result-screen__score result-screen__score--orange">
-              Orange ${orangePlayer.score}
-            </span>
-          </div>
-        </div>
-      </section>
-    `;
-
-    const gameOverScreen = app.querySelector<HTMLElement>("#game-over-screen");
-
-    if (!gameOverScreen) {
-      throw new Error("Game over screen not found");
-    }
-
-    gameOverScreen.addEventListener("click", () => {
-      clearResultTimeout();
-      renderFinalResultScreen();
-    });
-  }
-
-  function renderFinalResultScreen() {
-    clearResultTimeout();
-
-    if (result.isTie) {
-      renderDrawScreen();
-      return;
-    }
-
-    renderWinnerScreen(result.winners[0]);
-  }
-
-  function renderWinnerScreen(winner: ResultPlayer) {
-    app.innerHTML = `
-      <section class="result-screen result-screen--${result.theme} result-screen--winner result-screen--${winner.id}">
-        ${createConfettiHtml(result.theme)}
-
-        <p class="result-screen__subtitle">The winner is</p>
-
-        <h1 class="result-screen__title">
-          ${winner.name} Player
-        </h1>
-
-        <div
-          class="result-screen__winner-image"
-          role="img"
-          aria-label="${winner.name} player"
-        ></div>
-
-        ${createResultActionsHtml()}
-      </section>
-    `;
-
-    bindResultButtons();
-  }
-
-  function renderDrawScreen() {
-    app.innerHTML = `
-      <section class="result-screen result-screen--${result.theme} result-screen--draw">
-        <p class="result-screen__subtitle">It's a</p>
-
-        <h1 class="result-screen__title">
-          DRAW
-        </h1>
-
-        <div
-          class="result-screen__draw-image"
-          role="img"
-          aria-label="Draw"
-        ></div>
-
-        ${createResultActionsHtml()}
-      </section>
-    `;
-
-    bindResultButtons();
-  }
-
-  function bindResultButtons() {
-    const restartButton = app.querySelector<HTMLButtonElement>("#restart-button");
-    const homeButton = app.querySelector<HTMLButtonElement>("#home-button");
-
-    if (!restartButton || !homeButton) {
-      throw new Error("Result buttons not found");
-    }
-
-    restartButton.addEventListener("click", () => {
-      actions.onRestart();
-    });
-
-    homeButton.addEventListener("click", () => {
-      actions.onHome();
-    });
-  }
-
-  function clearResultTimeout() {
-    if (timeoutId !== undefined) {
-      clearTimeout(timeoutId);
-      timeoutId = undefined;
-    }
-  }
+  renderGameOverScreen(context);
+  context.timeoutId = window.setTimeout(() => renderFinalResultScreen(context), GAME_OVER_DURATION_IN_MS);
 }
 
-function createResultActionsHtml() {
-  return `
-    <div class="result-screen__actions">
-      <button class="result-screen__button" type="button" id="restart-button">
-        Restart
-      </button>
-
-      <button class="result-screen__button" type="button" id="home-button">
-        Home
-      </button>
-    </div>
-  `;
+function createResultContext(app: HTMLDivElement, result: ResultScreenData, actions: ResultScreenActions): ResultContext {
+  return {
+    app,
+    result,
+    actions,
+    bluePlayer: getPlayerById(result.players, "blue"),
+    orangePlayer: getPlayerById(result.players, "orange"),
+  };
 }
 
-function createConfettiHtml(theme: ThemeKey) {
-  if (theme !== "coding") {
-    return "";
-  }
+function renderGameOverScreen(context: ResultContext) {
+  context.app.innerHTML = createGameOverHtml(context.result.theme, context.bluePlayer, context.orangePlayer);
 
-  return `
-    <img
-      class="result-screen__confetti"
-      src="/assets/images/themes/coding/Confetti.png"
-      alt=""
-    />
-  `;
-}
-
-function getPlayerById(players: ResultPlayer[], playerId: "blue" | "orange") {
-  const player = players.find((currentPlayer) => {
-    return currentPlayer.id === playerId;
+  getRequiredElement<HTMLElement>(context.app, "#game-over-screen").addEventListener("click", () => {
+    clearResultTimeout(context);
+    renderFinalResultScreen(context);
   });
+}
 
-  if (!player) {
-    throw new Error(`Player not found: ${playerId}`);
+function renderFinalResultScreen(context: ResultContext) {
+  clearResultTimeout(context);
+
+  if (context.result.isTie) {
+    renderDrawScreen(context);
+    return;
   }
 
-  return player;
+  renderWinnerScreen(context, context.result.winners[0]);
+}
+
+function renderWinnerScreen(context: ResultContext, winner: Player) {
+  context.app.innerHTML = createWinnerHtml(context.result.theme, winner);
+  bindResultButtons(context);
+}
+
+function renderDrawScreen(context: ResultContext) {
+  context.app.innerHTML = createDrawHtml(context.result.theme);
+  bindResultButtons(context);
+}
+
+function bindResultButtons(context: ResultContext) {
+  getRequiredElement<HTMLButtonElement>(context.app, "#restart-button").addEventListener("click", () => context.actions.onRestart());
+  getRequiredElement<HTMLButtonElement>(context.app, "#home-button").addEventListener("click", () => context.actions.onHome());
+}
+
+function clearResultTimeout(context: ResultContext) {
+  if (context.timeoutId === undefined) {
+    return;
+  }
+
+  clearTimeout(context.timeoutId);
+  context.timeoutId = undefined;
 }

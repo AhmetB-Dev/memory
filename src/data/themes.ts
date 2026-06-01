@@ -1,3 +1,4 @@
+import type { ThemeKey } from "../models/game.model";
 import type { GameTheme } from "../models/theme.model";
 
 export const GAME_THEMES: GameTheme[] = [
@@ -110,3 +111,14 @@ export const GAME_THEMES: GameTheme[] = [
     ],
   },
 ];
+
+
+export function getThemeById(themeId: ThemeKey) {
+  const selectedTheme = GAME_THEMES.find((theme) => theme.id === themeId);
+
+  if (!selectedTheme) {
+    throw new Error(`Theme not found: ${themeId}`);
+  }
+
+  return selectedTheme;
+}

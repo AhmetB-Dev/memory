@@ -1,6 +1,18 @@
+import { getRequiredElement } from "../utils/html";
 import { renderSetupScreen } from "./setup.screen";
+
 export function renderHomeScreen(app: HTMLDivElement) {
-  app.innerHTML = `
+  app.innerHTML = HOME_SCREEN_TEMPLATE;
+  bindPlayButton(app);
+}
+
+function bindPlayButton(app: HTMLDivElement) {
+  getRequiredElement<HTMLButtonElement>(app, "#play-button").addEventListener("click", () => {
+    renderSetupScreen(app);
+  });
+}
+
+const HOME_SCREEN_TEMPLATE = `
     <section class="home-screen">
       <div class="home-screen__content">
         <p class="home-screen__subtitle">It’s play time.</p> 
@@ -18,14 +30,3 @@ export function renderHomeScreen(app: HTMLDivElement) {
       </button>
     </section>
   `;
-
-  const playButton = app.querySelector<HTMLButtonElement>("#play-button");
-
-  if (!playButton) {
-    throw new Error("Play button not found");
-  }
-
-  playButton.addEventListener("click", () => {
-    renderSetupScreen(app);
-  });
-}
