@@ -92,7 +92,26 @@
   cursor: pointer;
 
   input {
+    appearance: none;
+    display: grid;
+    place-content: center;
+    width: 0.9em;
+    height: 0.9em;
+    margin: 0;
+
+    border: 2px solid #303131;
+    border-radius: 50%;
     cursor: pointer;
+
+    &::before {
+      content: "";
+      width: 0.45em;
+      height: 0.45em;
+      border-radius: 50%;
+      background-color: #303131;
+      transform: scale(0);
+      transition: transform 160ms ease;
+    }
   }
 
   span {
@@ -120,6 +139,14 @@
     }
   }
 
+  &:hover input::before,
+  &:focus-within input::before,
+  input:checked::before {
+    transform: scale(1);
+  }
+
+  &:hover span,
+  &:focus-within span,
   input:checked + span {
     font-weight: 700;
 
