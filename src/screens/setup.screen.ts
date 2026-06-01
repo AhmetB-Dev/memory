@@ -1,7 +1,7 @@
 import { renderGameScreen } from "./game.screen";
 import { renderHomeScreen } from "./home.screen";
 import type { BoardSize, GameSetup, PlayerKey, ThemeKey } from "../models/game.model";
-import { getRequiredElement } from "../utils/html";
+import { getRequiredElement } from "./game.helpers";
 import { getThemeById } from "../data/themes";
 import { COMPLETE_DIVIDER_IMAGE, DEFAULT_DIVIDER_IMAGE, createSetupScreenHtml } from "./setup.template";
 

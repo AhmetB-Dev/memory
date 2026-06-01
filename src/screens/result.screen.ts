@@ -1,6 +1,5 @@
 import type { Player, ThemeKey } from "../models/game.model";
-import { getRequiredElement } from "../utils/html";
-import { getPlayerById } from "./game.helpers";
+import { getPlayerById, getRequiredElement } from "./game.helpers";
 import { createDrawHtml, createGameOverHtml, createWinnerHtml } from "./result.template";
 
 export type ResultPlayer = Player;

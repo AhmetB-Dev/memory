@@ -1,5 +1,5 @@
 import type { Player, ThemeKey } from "../models/game.model";
-import { fillTemplate } from "../utils/html";
+import { fillTemplate } from "./game.helpers";
 
 export function createGameOverHtml(theme: ThemeKey, bluePlayer: Player, orangePlayer: Player) {
   return fillTemplate(GAME_OVER_TEMPLATE, {

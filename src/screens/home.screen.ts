@@ -1,4 +1,4 @@
-import { getRequiredElement } from "../utils/html";
+import { getRequiredElement } from "./game.helpers";
 import { renderSetupScreen } from "./setup.screen";
 
 export function renderHomeScreen(app: HTMLDivElement) {

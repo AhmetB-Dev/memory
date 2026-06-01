@@ -1,8 +1,7 @@
 import type { GameScreenActions, GameSetup, MemoryCard, Player, PlayerKey } from "../models/game.model";
-import { getRequiredElement } from "../utils/html";
 import { getThemeById } from "../data/themes";
 import { createGameScreenHtml } from "./game.template";
-import { createMemoryCards, createPlayers, getCurrentPlayerIcon, getPlayerById } from "./game.helpers";
+import { createMemoryCards, createPlayers, getCurrentPlayerIcon, getPlayerById, getRequiredElement } from "./game.helpers";
 import { renderResultScreen } from "./result.screen";
 
 export type { BoardSize, GameSetup, PlayerKey, ThemeKey } from "../models/game.model";

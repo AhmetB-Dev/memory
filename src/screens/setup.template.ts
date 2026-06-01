@@ -1,5 +1,5 @@
 import type { ThemeKey } from "../models/game.model";
-import { fillTemplate } from "../utils/html";
+import { fillTemplate } from "./game.helpers";
 import { getThemeById } from "../data/themes";
 
 export const DEFAULT_DIVIDER_IMAGE = "/assets/images/setting/summary-divider.svg";

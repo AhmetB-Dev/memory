@@ -1,6 +1,5 @@
 import type { BoardSize, MemoryCard, Player, ThemeKey } from "../models/game.model";
-import { fillTemplate } from "../utils/html";
-import { getCurrentPlayerIcon } from "./game.helpers";
+import { fillTemplate, getCurrentPlayerIcon } from "./game.helpers";
 
 type GameTemplateData = {
   cards: MemoryCard[];
