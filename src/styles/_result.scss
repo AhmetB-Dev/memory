@@ -86,11 +86,9 @@
 
 .result-screen__confetti {
   position: absolute;
-  top: 2rem;
-  left: 50%;
-
-  width: min(90vw, 42rem);
-  transform: translateX(-50%);
+  top: 0;
+  height: 16em;
+  width: 100%;
   pointer-events: none;
 }
 

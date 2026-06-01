@@ -106,7 +106,7 @@ const RESULT_ACTIONS_TEMPLATE = `
 const CONFETTI_TEMPLATE = `
     <img
       class="result-screen__confetti"
-      src="/assets/images/themes/coding/Confetti.png"
+      src="assets/images/themes/coding/Confetti.webp"
       alt=""
     />
   `;
