@@ -13,6 +13,64 @@
   text-align: center;
 }
 
+
+.result-screen--game-over {
+  .result-screen__title,
+  .result-screen__final-score {
+    animation: result-slide-up-slow 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .result-screen__final-score {
+    animation-delay: 140ms;
+  }
+}
+
+.result-screen--winner,
+.result-screen--draw {
+  .result-screen__subtitle,
+  .result-screen__title,
+  .result-screen__winner-image,
+  .result-screen__draw-image,
+  .result-screen__actions {
+    animation: result-slide-up-slow 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .result-screen__title {
+    animation-delay: 120ms;
+  }
+
+  .result-screen__winner-image,
+  .result-screen__draw-image {
+    animation-delay: 240ms;
+  }
+
+  .result-screen__actions {
+    animation-delay: 360ms;
+  }
+}
+
+@keyframes result-slide-up-slow {
+  from {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result-screen--game-over,
+  .result-screen--winner,
+  .result-screen--draw {
+    * {
+      animation: none !important;
+    }
+  }
+}
+
 .result-screen__title {
   margin: 0;
   color: var(--result-title);
