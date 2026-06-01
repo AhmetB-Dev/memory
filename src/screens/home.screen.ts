@@ -21,7 +21,7 @@ const HOME_SCREEN_TEMPLATE = `
 
       <button class="home-screen__play-button" type="button" id="play-button">
         <img 
-          src="/assets/images/base/play-controller.svg" 
+          src="assets/images/base/play-controller.svg" 
           alt="" 
           class="home-screen__play-icon"
         />

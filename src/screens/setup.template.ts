@@ -2,8 +2,8 @@ import type { ThemeKey } from "../models/game.model";
 import { fillTemplate } from "./game.helpers";
 import { getThemeById } from "../data/themes";
 
-export const DEFAULT_DIVIDER_IMAGE = "/assets/images/setting/summary-divider.svg";
-export const COMPLETE_DIVIDER_IMAGE = "/assets/images/setting/Line.svg";
+export const DEFAULT_DIVIDER_IMAGE = "assets/images/setting/summary-divider.svg";
+export const COMPLETE_DIVIDER_IMAGE = "assets/images/setting/Line.svg";
 
 export function createSetupScreenHtml(defaultThemeId: ThemeKey) {
   const defaultTheme = getThemeById(defaultThemeId);
@@ -21,13 +21,13 @@ const SETUP_SCREEN_TEMPLATE = `
         <div class="setup-screen__layout">
           <div class="setup-screen__header">
             <h1 class="setup-screen__title">Settings</h1>
-            <img src="/assets/images/setting/arrow-line-long.svg" alt="" />
+            <img src="assets/images/setting/arrow-line-long.svg" alt="" />
           </div>
 
           <div class="setup-screen__options">
             <div class="setup-group">
               <div class="setup-group__icon">
-                <img src="/assets/images/setting/palette.svg" alt="" />
+                <img src="assets/images/setting/palette.svg" alt="" />
               </div>
 
               <div class="setup-group__content">
@@ -57,7 +57,7 @@ const SETUP_SCREEN_TEMPLATE = `
 
             <div class="setup-group">
               <div class="setup-group__icon">
-                <img src="/assets/images/setting/chess_pawn.svg" alt="" />
+                <img src="assets/images/setting/chess_pawn.svg" alt="" />
               </div>
 
               <div class="setup-group__content">
@@ -77,7 +77,7 @@ const SETUP_SCREEN_TEMPLATE = `
 
             <div class="setup-group">
               <div class="setup-group__icon">
-                <img src="/assets/images/setting/card.svg" alt="" />
+                <img src="assets/images/setting/card.svg" alt="" />
               </div>
 
               <div class="setup-group__content">
@@ -150,7 +150,7 @@ const SETUP_SCREEN_TEMPLATE = `
                   disabled
                 >
                   <img
-                    src="/assets/images/setting/start-icon.svg"
+                    src="assets/images/setting/start-icon.svg"
                     alt=""
                     class="setup-screen__start-icon"
                   />

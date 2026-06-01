@@ -36,7 +36,7 @@ export function getCurrentPlayerIcon(themeId: ThemeKey, playerId: PlayerKey): st
     return getCodingCurrentPlayerIcon(playerId);
   }
 
-  return "/assets/images/shared/chess_pawn_player.svg";
+  return "assets/images/shared/chess_pawn_player.svg";
 }
 
 export function getPlayerById(players: Player[], playerId: PlayerKey) {
@@ -75,8 +75,8 @@ function createMemoryCard(id: number, pairId: number, image: string, backImage: 
 
 function getCodingCurrentPlayerIcon(playerId: PlayerKey): string {
   const playerIcons: Record<PlayerKey, string> = {
-    blue: "/assets/images/themes/coding/label_blue.svg",
-    orange: "/assets/images/themes/coding/label_orange.svg",
+    blue: "assets/images/themes/coding/label_blue.svg",
+    orange: "assets/images/themes/coding/label_orange.svg",
   };
 
   return playerIcons[playerId];
