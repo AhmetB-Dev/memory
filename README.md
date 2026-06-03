@@ -1,76 +1,77 @@
 # Memory Game
 
-A browser-based memory card game built with **TypeScript** and **SCSS**.  
-The project focuses on clean screen-based structure, reusable helpers, typed game state, dynamic templates, and theme-based styling.
+A browser-based two-player memory card game built with **TypeScript**, **SCSS**, and a modular DOM structure.
+
+This project was created as a learning project to practice important frontend development fundamentals. The focus is on TypeScript, DOM manipulation, typed state management, reusable helper functions, dynamic templates, and structured SCSS organization.
 
 ## Overview
 
-The game starts with a simple home screen. From there, the user can configure the game by choosing a visual theme, the starting player, and the board size. After the setup is complete, the memory board is generated dynamically and the two players take turns finding matching card pairs.
+The game starts with a home screen. After that, the user can choose different game options in the setup screen, such as the theme, the starting player, and the board size.
 
-When all pairs are found, the game shows a temporary game-over screen and then displays the final result, including either the winner or a draw.
+After the setup is completed, the game board is generated dynamically. Two players take turns trying to find matching card pairs. When all pairs have been found, the final result is displayed.
 
 ## Features
 
 - Home screen with play button
-- Setup screen with selectable game options
-- Four visual themes:
+- Setup screen with selectable options
+- Four different themes:
   - Coding
   - Gaming
   - DA Projects
   - Foods
-- Two-player mode with Blue and Orange player
-- Selectable board sizes:
+
+- Two-player mode
+- Starting player selection
+- Different board sizes:
   - 16 cards
   - 24 cards
   - 36 cards
-- Dynamic card generation based on the selected theme and board size
-- Shuffled memory card pairs
-- Turn-based player switching
+
+- Dynamic card generation
+- Randomly shuffled card pairs
 - Score tracking for both players
-- Match and no-match handling
-- Board lock while cards are being compared
-- Exit confirmation modal during the game
-- Game-over transition screen
-- Final result screen with winner or draw state
-- Restart and home navigation from the result screen
-- Modular TypeScript structure
-- SCSS-based styling with separated screen and theme files
+- Player switching after non-matching cards
+- Matching card detection
+- Locked board while cards are being compared
+- Exit confirmation during the game
+- Result screen with winner or draw state
+- Restart or return to home screen
 
-## Tech Stack
+## Technologies Used
 
-| Technology | Purpose |
-|---|---|
-| TypeScript | Game logic, state handling, typed models, screen rendering |
-| SCSS | Styling, layout, screen styles, theme styles |
-| HTML Templates | Dynamic screen markup rendered through TypeScript |
-| Vite or similar frontend tooling | Local development and project build |
+| Technology     | Purpose                                                |
+| -------------- | ------------------------------------------------------ |
+| TypeScript     | Game logic, types, state management, and DOM rendering |
+| SCSS           | Styling, layouts, and theme-specific styles            |
+| HTML Templates | Dynamic markup generation                              |
+| Vite           | Development server and build tooling                   |
 
 ## Project Structure
 
 ```text
 src/
 ├── data/
-│   └── themes.ts              # Theme configuration and image paths
+│   └── themes.ts              # Theme data and image paths
 ├── models/
-│   ├── game.model.ts          # Game-related TypeScript types
-│   └── theme.model.ts         # Theme-related TypeScript interfaces
+│   ├── game.model.ts          # Types for game state, players, and cards
+│   └── theme.model.ts         # Types and interfaces for themes
 ├── screens/
-│   ├── home.screen.ts         # Home screen rendering and play button handling
-│   ├── setup.screen.ts        # Game setup state and event handling
-│   ├── setup.template.ts      # Setup screen HTML template
-│   ├── game.screen.ts         # Main game logic and board interactions
+│   ├── home.screen.ts         # Home screen
+│   ├── setup.screen.ts        # Setup logic
+│   ├── setup.template.ts      # Setup template
+│   ├── game.screen.ts         # Main game logic
 │   ├── game.helpers.ts        # Reusable helper functions
-│   ├── game.template.ts       # Game board HTML template
-│   ├── result.screen.ts       # Result flow and button handling
-│   └── result.template.ts     # Result screen HTML templates
+│   ├── game.template.ts       # Game template
+│   ├── result.screen.ts       # Result logic
+│   └── result.template.ts     # Result template
 ├── styles/
 │   ├── _base.scss             # Base styles
 │   ├── _home.scss             # Home screen styles
 │   ├── _setup.scss            # Setup screen styles
 │   ├── _game.scss             # Game screen styles
 │   ├── _result.scss           # Result screen styles
-│   └── themes/                # Theme-specific SCSS files
-├── styles.scss                # Main SCSS entry file
+│   └── themes/                # Theme-specific styles
+├── styles.scss                # Main SCSS file
 └── main.ts                    # Application entry point
 ```
 
@@ -83,85 +84,102 @@ Setup Screen
     ↓
 Game Screen
     ↓
-Game Over Screen
-    ↓
 Result Screen
 ```
 
-## How to Run the Project
+## Getting Started
 
-Install the dependencies:
+### Prerequisites
+
+This project requires **Node.js** and **npm**.
+
+Recommended:
+
+- Node.js LTS version
+- npm
+
+### Installation
+
+Install all dependencies first:
 
 ```bash
 npm install
 ```
 
-Start the development server:
+### Start Development Server
 
 ```bash
 npm run dev
 ```
 
-Create a production build:
+This command starts the local development server. The local URL will be shown in the terminal.
+
+### Create Production Build
 
 ```bash
 npm run build
 ```
 
-Preview the production build:
+This command creates an optimized production version of the project.
+
+### Preview Production Build
 
 ```bash
 npm run preview
 ```
 
-> Note: The exact commands depend on the scripts defined in your `package.json`. The commands above are the common setup for a TypeScript frontend project using Vite or similar tooling.
+This command previews the production build locally in the browser.
 
-## Main Implementation Details
+## Available Scripts
 
-### Typed game state
+| Command           | Description                           |
+| ----------------- | ------------------------------------- |
+| `npm install`     | Installs all required dependencies    |
+| `npm run dev`     | Starts the local development server   |
+| `npm run build`   | Creates an optimized production build |
+| `npm run preview` | Previews the production build locally |
 
-The game uses TypeScript types for the setup options, players, board sizes, memory cards, and screen actions. This keeps the game state predictable and reduces errors when passing data between screens.
+> Note: These commands are based on the scripts defined in `package.json`. If the script names are changed, this section should be updated.
 
-### Dynamic theme system
+## Main Learning Goals
 
-All themes are configured in one central file. Each theme defines its name, CSS class, preview image, card-back image, and card-front images. This makes it easier to add new themes later without rewriting the game logic.
+This project was used to practice the following topics:
 
-### Screen-based architecture
-
-Each screen is separated into its own module. Rendering, event binding, and template generation are kept apart as much as possible, which makes the project easier to understand and maintain.
-
-### Card matching logic
-
-When a player selects two cards, the game checks whether both cards belong to the same pair. Matching pairs stay open and increase the current player's score. Non-matching cards are flipped back after a short delay, and the turn switches to the other player.
-
-### Result handling
-
-At the end of the game, the highest score is calculated. If both players have the same score, the result screen shows a draw. Otherwise, the player with the highest score is displayed as the winner.
-
-## What I Learned
-
-This project helped me practice important frontend development concepts, including:
-
-- Structuring a TypeScript project into smaller modules
-- Working with typed state and reusable helper functions
-- Rendering dynamic HTML templates through TypeScript
-- Handling user interaction with DOM events
+- Structuring a TypeScript project into multiple modules
+- Working with typed data structures
 - Managing game state without a framework
-- Building a turn-based game flow
-- Organizing SCSS by screens and themes
-- Improving code readability through documentation and clear naming
+- DOM manipulation with TypeScript
+- Event handling
+- Reusable helper functions
+- Dynamic rendering of HTML templates
+- Organizing SCSS files
+- Building a simple two-player game flow
+- Separating data, logic, templates, and styles
 
-## Possible Future Improvements
+## Possible Improvements
 
-- Add sound effects for card flips, matches, and game-over state
-- Add animations for matched cards
-- Save high scores in local storage
-- Add a single-player mode
-- Add a timer or move counter
-- Add difficulty levels
-- Improve keyboard accessibility
-- Add unit tests for helper functions and game logic
+The following features could be added or improved later:
+
+- Sound effects for card flips, matches, and game over
+- Animations for matched card pairs
+- High score storage with Local Storage
+- Single-player mode
+- Timer or move counter
+- Difficulty levels
+- Better keyboard support
+- Improved accessibility
+- Tests for helper functions and game logic
+
+## Limitations
+
+This project intentionally focuses on frontend fundamentals. It currently does not include:
+
+- Backend functionality
+- User accounts
+- Persistent game state storage
+- Full keyboard support
+- Automated tests
 
 ## Author
 
-Created as a frontend learning project to practice TypeScript, SCSS, DOM manipulation, and clean project structure.
+Created as a learning project to practice TypeScript, SCSS, DOM manipulation, and clean project structure.
