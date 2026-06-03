@@ -1,5 +1,5 @@
 import type { Player, ThemeKey } from "../models/game.model";
-import { getPlayerById, getRequiredElement } from "./game.helpers";
+import { getPlayerById, getRequiredElement } from "../shared/game.helpers";
 import { createDrawHtml, createGameOverHtml, createWinnerHtml } from "./result.template";
 
 /** Public player type used by the result screen. */
@@ -37,7 +37,11 @@ const GAME_OVER_DURATION_IN_MS = 2500;
  *
  * First, the game-over screen is shown. After a delay, the final winner or draw screen is displayed.
  */
-export function renderResultScreen(app: HTMLDivElement, result: ResultScreenData, actions: ResultScreenActions) {
+export function renderResultScreen(
+  app: HTMLDivElement,
+  result: ResultScreenData,
+  actions: ResultScreenActions,
+) {
   const context = createResultContext(app, result, actions);
 
   renderGameOverScreen(context);
@@ -45,7 +49,11 @@ export function renderResultScreen(app: HTMLDivElement, result: ResultScreenData
 }
 
 /** Creates the result context and extracts both player scores. */
-function createResultContext(app: HTMLDivElement, result: ResultScreenData, actions: ResultScreenActions): ResultContext {
+function createResultContext(
+  app: HTMLDivElement,
+  result: ResultScreenData,
+  actions: ResultScreenActions,
+): ResultContext {
   return {
     app,
     result,

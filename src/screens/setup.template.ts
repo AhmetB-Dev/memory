@@ -1,5 +1,5 @@
 import type { ThemeKey } from "../models/game.model";
-import { fillTemplate } from "./game.helpers";
+import { fillTemplate } from "../shared/game.helpers";
 import { getThemeById } from "../data/themes";
 
 /** Divider image used before the setup is complete. */

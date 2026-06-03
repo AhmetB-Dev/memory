@@ -1,4 +1,4 @@
-import { getRequiredElement } from "./game.helpers";
+import { getRequiredElement } from "../shared/game.helpers";
 import { renderSetupScreen } from "./setup.screen";
 
 /**

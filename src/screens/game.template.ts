@@ -1,5 +1,5 @@
 import type { BoardSize, MemoryCard, Player, ThemeKey } from "../models/game.model";
-import { fillTemplate, getCurrentPlayerIcon } from "./game.helpers";
+import { fillTemplate, getCurrentPlayerIcon } from "../shared/game.helpers";
 
 /** Data required to render the active game screen. */
 type GameTemplateData = {

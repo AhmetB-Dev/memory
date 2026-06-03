@@ -1,7 +1,7 @@
 import { renderGameScreen } from "./game.screen";
 import { renderHomeScreen } from "./home.screen";
 import type { BoardSize, GameSetup, PlayerKey, ThemeKey } from "../models/game.model";
-import { getRequiredElement } from "./game.helpers";
+import { getRequiredElement } from "../shared/game.helpers";
 import { getThemeById } from "../data/themes";
 import { COMPLETE_DIVIDER_IMAGE, DEFAULT_DIVIDER_IMAGE, createSetupScreenHtml } from "./setup.template";
 
@@ -152,8 +152,12 @@ function selectBoardSize(context: SetupContext, boardSize: BoardSize) {
 /** Writes the currently selected options into the summary box. */
 function updateSummary(context: SetupContext) {
   context.elements.summaryTheme.textContent = THEME_LABELS[context.state.theme];
-  context.elements.summaryPlayer.textContent = context.state.player ? PLAYER_LABELS[context.state.player] : "Player";
-  context.elements.summaryBoardSize.textContent = context.state.boardSize ? `${context.state.boardSize} cards` : "Board size";
+  context.elements.summaryPlayer.textContent = context.state.player
+    ? PLAYER_LABELS[context.state.player]
+    : "Player";
+  context.elements.summaryBoardSize.textContent = context.state.boardSize
+    ? `${context.state.boardSize} cards`
+    : "Board size";
 }
 
 /** Updates the theme preview image and its alt text. */

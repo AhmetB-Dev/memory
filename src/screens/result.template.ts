@@ -1,5 +1,5 @@
 import type { Player, ThemeKey } from "../models/game.model";
-import { fillTemplate } from "./game.helpers";
+import { fillTemplate } from "../shared/game.helpers";
 
 /** Creates the temporary game-over screen with the final scores. */
 export function createGameOverHtml(theme: ThemeKey, bluePlayer: Player, orangePlayer: Player) {

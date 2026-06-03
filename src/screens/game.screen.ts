@@ -7,7 +7,7 @@ import {
   getCurrentPlayerIcon,
   getPlayerById,
   getRequiredElement,
-} from "./game.helpers";
+} from "../shared/game.helpers";
 import { renderResultScreen } from "./result.screen";
 
 export type { BoardSize, GameSetup, PlayerKey, ThemeKey } from "../models/game.model";
