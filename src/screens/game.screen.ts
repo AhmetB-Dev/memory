@@ -1,7 +1,13 @@
 import type { GameScreenActions, GameSetup, MemoryCard, Player, PlayerKey } from "../models/game.model";
 import { getThemeById } from "../data/themes";
 import { createGameScreenHtml } from "./game.template";
-import { createMemoryCards, createPlayers, getCurrentPlayerIcon, getPlayerById, getRequiredElement } from "./game.helpers";
+import {
+  createMemoryCards,
+  createPlayers,
+  getCurrentPlayerIcon,
+  getPlayerById,
+  getRequiredElement,
+} from "./game.helpers";
 import { renderResultScreen } from "./result.screen";
 
 export type { BoardSize, GameSetup, PlayerKey, ThemeKey } from "../models/game.model";
@@ -16,6 +22,8 @@ type GameContext = {
   openCards: MemoryCard[];
   isBoardLocked: boolean;
 };
+
+const GAME_OVER_DELAY_MS = 1500;
 
 export function renderGameScreen(app: HTMLDivElement, setup: GameSetup, actions: GameScreenActions) {
   const context = createGameContext(app, setup, actions);
@@ -55,9 +63,15 @@ function bindGameEvents(context: GameContext) {
 }
 
 function bindExitEvents(context: GameContext) {
-  getRequiredElement<HTMLElement>(context.app, "#exit-game-button").addEventListener("click", () => openExitModal(context));
-  getRequiredElement<HTMLButtonElement>(context.app, "#back-to-game-button").addEventListener("click", () => closeExitModal(context));
-  getRequiredElement<HTMLButtonElement>(context.app, "#confirm-exit-button").addEventListener("click", () => renderGameResult(context));
+  getRequiredElement<HTMLElement>(context.app, "#exit-game-button").addEventListener("click", () =>
+    openExitModal(context),
+  );
+  getRequiredElement<HTMLButtonElement>(context.app, "#back-to-game-button").addEventListener("click", () =>
+    closeExitModal(context),
+  );
+  getRequiredElement<HTMLButtonElement>(context.app, "#confirm-exit-button").addEventListener("click", () =>
+    renderGameResult(context),
+  );
 }
 
 function bindCardEvents(context: GameContext) {
@@ -178,7 +192,10 @@ function updateCurrentPlayerIcon(context: GameContext) {
 function updateCurrentPlayerIconBox(context: GameContext, playerId: PlayerKey) {
   const iconBox = getRequiredElement<HTMLDivElement>(context.app, "#current-player-icon-box");
 
-  iconBox.classList.remove("game-screen__current-player-icon-box--blue", "game-screen__current-player-icon-box--orange");
+  iconBox.classList.remove(
+    "game-screen__current-player-icon-box--blue",
+    "game-screen__current-player-icon-box--orange",
+  );
   iconBox.classList.add(`game-screen__current-player-icon-box--${playerId}`);
 }
 
@@ -193,9 +210,15 @@ function updateScoreTexts(context: GameContext) {
 function checkGameEnd(context: GameContext) {
   const allCardsMatched = context.cards.every((card) => card.isMatched);
 
-  if (allCardsMatched) {
-    renderGameResult(context);
+  if (!allCardsMatched) {
+    return;
   }
+
+  context.isBoardLocked = true;
+
+  setTimeout(() => {
+    renderGameResult(context);
+  }, GAME_OVER_DELAY_MS);
 }
 
 function renderGameResult(context: GameContext) {
