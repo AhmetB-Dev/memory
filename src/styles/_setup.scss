@@ -77,12 +77,11 @@
 
 .setup-screen__summary-content {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-end;
   background-color: #f6f6f6;
   font-family: "almarai", sans-serif;
-  padding: 0em 1em 0em 0em;
-  min-width: 30rem;
+  min-width: 30em;
 }
 
 .setup-option {
@@ -151,8 +150,6 @@
   &:hover span,
   &:focus-within span,
   input:checked + span {
-    font-weight: 700;
-
     &::after {
       opacity: 1;
       transform: translateX(0);
@@ -164,8 +161,6 @@
   display: flex;
   align-items: center;
   padding: 1em;
-  background-color: #f6f6f6;
-  white-space: nowrap;
 }
 
 .setup-screen__decoration-icon {
