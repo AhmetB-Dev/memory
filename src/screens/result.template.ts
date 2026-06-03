@@ -1,6 +1,7 @@
 import type { Player, ThemeKey } from "../models/game.model";
 import { fillTemplate } from "./game.helpers";
 
+/** Creates the temporary game-over screen with the final scores. */
 export function createGameOverHtml(theme: ThemeKey, bluePlayer: Player, orangePlayer: Player) {
   return fillTemplate(GAME_OVER_TEMPLATE, {
     theme,
@@ -9,6 +10,7 @@ export function createGameOverHtml(theme: ThemeKey, bluePlayer: Player, orangePl
   });
 }
 
+/** Creates the final winner screen for the winning player. */
 export function createWinnerHtml(theme: ThemeKey, winner: Player) {
   return fillTemplate(WINNER_TEMPLATE, {
     theme,
@@ -19,6 +21,7 @@ export function createWinnerHtml(theme: ThemeKey, winner: Player) {
   });
 }
 
+/** Creates the final draw screen when both players have the same score. */
 export function createDrawHtml(theme: ThemeKey) {
   return fillTemplate(DRAW_TEMPLATE, {
     theme,
@@ -26,10 +29,12 @@ export function createDrawHtml(theme: ThemeKey) {
   });
 }
 
+/** Adds confetti only for the coding theme. */
 function createConfettiHtml(theme: ThemeKey) {
   return theme === "coding" ? CONFETTI_TEMPLATE : "";
 }
 
+/** Temporary result screen shown before the final result. */
 const GAME_OVER_TEMPLATE = `
     <section
       class="result-screen result-screen--{{theme}} result-screen--game-over"
@@ -53,6 +58,7 @@ const GAME_OVER_TEMPLATE = `
     </section>
   `;
 
+/** Final result screen shown when one player wins. */
 const WINNER_TEMPLATE = `
     <section class="result-screen result-screen--{{theme}} result-screen--winner result-screen--{{winnerId}}">
       {{confettiHtml}}
@@ -73,6 +79,7 @@ const WINNER_TEMPLATE = `
     </section>
   `;
 
+/** Final result screen shown when the game ends in a draw. */
 const DRAW_TEMPLATE = `
     <section class="result-screen result-screen--{{theme}} result-screen--draw">
       <p class="result-screen__subtitle">It's a</p>
@@ -91,6 +98,7 @@ const DRAW_TEMPLATE = `
     </section>
   `;
 
+/** Shared action buttons used by both final result screens. */
 const RESULT_ACTIONS_TEMPLATE = `
     <div class="result-screen__actions">
       <button class="result-screen__button" type="button" id="restart-button">
@@ -103,6 +111,7 @@ const RESULT_ACTIONS_TEMPLATE = `
     </div>
   `;
 
+/** Decorative confetti image used by the coding theme winner screen. */
 const CONFETTI_TEMPLATE = `
     <img
       class="result-screen__confetti"

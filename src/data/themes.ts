@@ -1,6 +1,12 @@
 import type { ThemeKey } from "../models/game.model";
 import type { GameTheme } from "../models/theme.model";
 
+/**
+ * All available memory-game themes.
+ *
+ * Each theme defines its display name, CSS class, preview image, card-back image,
+ * and the list of card-front images used to generate matching pairs.
+ */
 export const GAME_THEMES: GameTheme[] = [
   {
     id: "coding",
@@ -112,7 +118,10 @@ export const GAME_THEMES: GameTheme[] = [
   },
 ];
 
-
+/**
+ * Returns the complete theme configuration for a given theme id.
+ * Throws an error when the id does not exist, because the game cannot render cards without a valid theme.
+ */
 export function getThemeById(themeId: ThemeKey) {
   const selectedTheme = GAME_THEMES.find((theme) => theme.id === themeId);
 

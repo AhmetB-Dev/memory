@@ -1,6 +1,7 @@
 import type { BoardSize, MemoryCard, Player, ThemeKey } from "../models/game.model";
 import { fillTemplate, getCurrentPlayerIcon } from "./game.helpers";
 
+/** Data required to render the active game screen. */
 type GameTemplateData = {
   cards: MemoryCard[];
   currentPlayer: Player;
@@ -9,6 +10,11 @@ type GameTemplateData = {
   themeClassName: string;
 };
 
+/**
+ * Creates the full HTML string for the game screen.
+ *
+ * The dynamic card HTML is generated separately and then inserted into the main screen template.
+ */
 export function createGameScreenHtml(data: GameTemplateData) {
   return fillTemplate(GAME_SCREEN_TEMPLATE, {
     themeClassName: data.themeClassName,
@@ -21,6 +27,7 @@ export function createGameScreenHtml(data: GameTemplateData) {
   });
 }
 
+/** Creates the HTML for one clickable memory card. */
 function createCardHtml(card: MemoryCard) {
   return fillTemplate(CARD_TEMPLATE, {
     cardId: card.id,
@@ -29,6 +36,7 @@ function createCardHtml(card: MemoryCard) {
   });
 }
 
+/** Main layout for the active game screen. */
 const GAME_SCREEN_TEMPLATE = `
  <section class="game-screen {{themeClassName}}">
   <header class="game-screen__dp">
@@ -88,6 +96,7 @@ const GAME_SCREEN_TEMPLATE = `
 </section>
   `;
 
+/** Template for one card with a front and back image. */
 const CARD_TEMPLATE = `
  <button
   class="memory-card"
@@ -110,13 +119,14 @@ const CARD_TEMPLATE = `
 </button>
     `;
 
+/** Confirmation modal that appears before the player leaves the current game. */
 const EXIT_MODAL_TEMPLATE = `
   <div class="exit-modal" id="exit-modal" hidden>
     <div class="exit-modal__content">
       <h2>Are you sure you want to quit the game?</h2>
 
       <div class="exit-modal__actions">
-        <button class="exit-modal__button" type="button" id="back-to-game-button">No, Back to game</button>
+        <button class="exit-modal__button" type="button" id="back-to-game-button">No, back to game</button>
 
         <button class="exit-modal__button exit-modal__button--danger" type="button" id="confirm-exit-button">
           Yes, quit game

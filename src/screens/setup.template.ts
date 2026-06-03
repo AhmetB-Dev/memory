@@ -2,9 +2,17 @@ import type { ThemeKey } from "../models/game.model";
 import { fillTemplate } from "./game.helpers";
 import { getThemeById } from "../data/themes";
 
+/** Divider image used before the setup is complete. */
 export const DEFAULT_DIVIDER_IMAGE = "assets/images/setting/summary-divider.svg";
+
+/** Divider image used after all required setup options are selected. */
 export const COMPLETE_DIVIDER_IMAGE = "assets/images/setting/Line.svg";
 
+/**
+ * Creates the complete setup-screen HTML.
+ *
+ * The default theme preview is inserted dynamically so the initial preview stays in sync with the selected default theme.
+ */
 export function createSetupScreenHtml(defaultThemeId: ThemeKey) {
   const defaultTheme = getThemeById(defaultThemeId);
 
@@ -15,6 +23,7 @@ export function createSetupScreenHtml(defaultThemeId: ThemeKey) {
   });
 }
 
+/** Static layout for the setup screen. */
 const SETUP_SCREEN_TEMPLATE = `
     <section class="setup-screen">
       <div class="setup-screen__content">
