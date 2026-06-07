@@ -6,37 +6,133 @@
     font-family: var(--font-txt);
   }
 
-  .game-screen__header {
+  &__header {
     background-color: var(--game-header-bg);
     border-radius: var(--game-header-radius);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 8em;
+    padding: 0.8em 1em;
   }
-}
 
-.game-screen__player-score-icon {
-  width: 1.5rem;
-  height: 1.2rem;
+  &__player-score-icon {
+    width: 1.5rem;
+    height: 1.2rem;
 
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
 
-.game-screen__player-score-icon--blue {
-  background-image: var(--game-player-blue-image);
-}
+  &__player-score-icon--blue {
+    background-image: var(--game-player-blue-image);
+  }
 
-.game-screen__player-score-blue-txt::after {
-  content: var(--txt-name-blue);
-  color: #2bb1ff;
-}
+  &__player-score-blue-txt::after {
+    content: var(--txt-name-blue);
+    color: #2bb1ff;
+  }
 
-.game-screen__player-score-icon--orange {
-  background-image: var(--game-player-orange-image);
-}
+  &__player-score-icon--orange {
+    background-image: var(--game-player-orange-image);
+  }
 
-.game-screen__player-score-orange-txt::after {
-  content: var(--txt-name-orange);
-  color: #f58e39;
+  &__player-score-orange-txt::after {
+    content: var(--txt-name-orange);
+    color: #f58e39;
+  }
+
+  &__exit-icon-size {
+    width: 1em;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  &__exit-icon {
+    background-image: var(--exit-icon-image);
+  }
+
+  &__dp {
+    display: flex;
+    justify-content: center;
+    padding: 0 0 3em;
+  }
+
+  &__current-player-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.4em;
+    border-radius: var(--current-player-icon-box-radius);
+  }
+
+  &__info-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    color: var(--game-header-text);
+  }
+
+  &__current-player-icon-box--orange {
+    background-color: var(--current-player-orange-bg);
+  }
+
+  &__current-player-icon-box--blue {
+    background-color: var(--current-player-blue-bg);
+  }
+
+  &__bg-pd {
+    background-color: var(--bg-score);
+    padding: 0.8em;
+    border-radius: var(--bg-score-br);
+  }
+
+  &__player-score {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+  }
+
+  &__exit-content {
+    display: flex;
+    padding: 0.6em 0.7em;
+    border: var(--exit-trigger-border, none);
+    border-radius: var(--exit-trigger-radius);
+    cursor: pointer;
+    background-color: var(--exit-trigger-bg, transparent);
+
+    button {
+      color: var(--exit-trigger-text);
+      font-family: var(--font-txt);
+    }
+  }
+
+  &__board {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    gap: 6px;
+    grid-template-columns: repeat(var(--board-columns), var(--card-width));
+  }
+
+  &__board--16 {
+    --board-columns: 4;
+    --card-width: clamp(4.5rem, 7vw, 6rem);
+  }
+
+  &__board--24 {
+    --board-columns: 6;
+    --card-width: clamp(4rem, 6vw, 5.2rem);
+  }
+
+  &__board--36 {
+    --board-columns: 6;
+    --card-width: clamp(3.5rem, 5vw, 4.6rem);
+  }
 }
 
 #orange-score {
@@ -45,113 +141,6 @@
 
 #blue-score {
   color: #2bb1ff;
-}
-
-.game-screen__exit-icon-size {
-  width: 1em;
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-.game-screen__exit-icon {
-  background-image: var(--exit-icon-image);
-}
-
-.game-screen__dp {
-  display: flex;
-  justify-content: center;
-  padding: 0 0 3em;
-}
-
-.game-screen__header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 8em;
-
-  padding: 0.8em 1em;
-  border-radius: var(--game-header-radius);
-}
-
-.game-screen__info-item {
-  display: flex;
-  align-items: center;
-  gap: 1.5em;
-  color: var(--game-header-text);
-}
-
-.game-screen__current-player-icon-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 0.4em;
-  border-radius: var(--current-player-icon-box-radius);
-}
-
-.game-screen__current-player-icon {
-  // width: var(--current-player-icon-size, 2.8rem);
-  // height: var(--current-player-icon-size, 2.8rem);
-  object-fit: contain;
-}
-
-.game-screen__current-player-icon-box--blue {
-  background-color: var(--current-player-blue-bg);
-}
-
-.game-screen__current-player-icon-box--orange {
-  background-color: var(--current-player-orange-bg);
-}
-
-.game-screen__bg-pd {
-  background-color: var(--bg-score);
-  padding: 0.8em;
-  border-radius: var(--bg-score-br);
-}
-
-.game-screen__player-score {
-  display: flex;
-  align-items: center;
-  gap: 0.3em;
-}
-
-.game-screen__exit-content {
-  display: flex;
-  padding: 0.6em 0.7em;
-  border: var(--exit-trigger-border, none);
-  border-radius: var(--exit-trigger-radius);
-  cursor: pointer;
-  background-color: var(--exit-trigger-bg, transparent);
-
-  button {
-    color: var(--exit-trigger-text);
-    font-family: var(--font-txt);
-  }
-}
-
-.game-screen__board {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  gap: 6px;
-  grid-template-columns: repeat(var(--board-columns), var(--card-width));
-}
-
-.game-screen__board--16 {
-  --board-columns: 4;
-  --card-width: clamp(4.5rem, 7vw, 6rem);
-}
-
-.game-screen__board--24 {
-  --board-columns: 6;
-  --card-width: clamp(4rem, 6vw, 5.2rem);
-}
-
-.game-screen__board--36 {
-  --board-columns: 6;
-  --card-width: clamp(3.5rem, 5vw, 4.6rem);
 }
 
 .memory-card {
@@ -203,10 +192,6 @@
   cursor: default;
 }
 
-/* =============================
-   Exit Modal
-============================= */
-
 .exit-modal {
   position: fixed;
   inset: 0;
@@ -220,6 +205,52 @@
   backdrop-filter: blur(4px);
 
   animation: exit-modal-fade-in 180ms ease-out both;
+
+  &__content {
+    width: min(90vw, 420px);
+    padding: 2rem;
+    font-family: var(--font-txt);
+    background-color: var(--exit-modal-panel-bg, #f6f6f6);
+    color: var(--exit-modal-panel-text, #303131);
+    text-align: center;
+    border-radius: var(--exit-modal-radius, 0);
+    animation: exit-modal-slide-up 260ms ease-out both;
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--exit-modal-title);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  &__button {
+    padding: 0.9rem 1.4rem;
+    border-radius: var(--exit-modal-radius, 0);
+    background-color: #f0ea6e;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    transition:
+      transform 150ms ease,
+      opacity 150ms ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  & .exit-modal__button--danger {
+    background-color: #e71c4f;
+    color: #ffffff;
+  }
 }
 
 .exit-modal[hidden] {
@@ -248,23 +279,6 @@
   }
 }
 
-.exit-modal__content {
-  width: min(90vw, 420px);
-  padding: 2rem;
-  font-family: var(--font-txt);
-  background-color: var(--exit-modal-panel-bg, #f6f6f6);
-  color: var(--exit-modal-panel-text, #303131);
-  text-align: center;
-  border-radius: var(--exit-modal-radius, 0);
-  animation: exit-modal-slide-up 260ms ease-out both;
-
-  h2 {
-    margin: 0;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    color: var(--exit-modal-title);
-  }
-}
-
 #back-to-game-button {
   background-color: var(--exit-back-bg);
   color: var(--exit-back-text);
@@ -274,33 +288,4 @@
   background-color: var(--exit-confirm-bg);
   color: var(--exit-confirm-text);
   border: var(--exit-confirm-border, none);
-}
-
-.exit-modal__actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.exit-modal__button {
-  padding: 0.9rem 1.4rem;
-  border-radius: var(--exit-modal-radius, 0);
-  background-color: #f0ea6e;
-
-  font-size: 1rem;
-  font-weight: 700;
-
-  transition:
-    transform 150ms ease,
-    opacity 150ms ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-}
-
-.exit-modal__button--danger {
-  background-color: #e71c4f;
-  color: #ffffff;
 }

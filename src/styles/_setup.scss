@@ -1,8 +1,17 @@
-@mixin flex-center($justify: center, $align: center, $direction: null) {
+@mixin flex-box($justify: null, $align: null, $direction: null) {
   display: flex;
-  justify-content: $justify;
-  align-items: $align;
-  flex-direction: $direction;
+
+  @if $justify != null {
+    justify-content: $justify;
+  }
+
+  @if $align != null {
+    align-items: $align;
+  }
+
+  @if $direction != null {
+    flex-direction: $direction;
+  }
 }
 
 .setup-screen {
@@ -23,67 +32,63 @@
   }
 
   &__content {
-    @include flex-center(space-evenly, flex-end);
+    @include flex-box(space-evenly, flex-end);
   }
 
   &__layout {
-    @include flex-center(null, null, column);
+    @include flex-box(null, null, column);
+  }
+
+  &__dp-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5em;
+  }
+
+  &__summary-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f6f6;
+    font-family: "almarai", sans-serif;
+    min-width: 30em;
+  }
+
+  &__summary {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__theme-preview-image {
+    width: 80%;
+  }
+
+  &__theme-preview-card {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
 .setup-group {
-  @include flex-center(null, baseline);
+  @include flex-box(null, baseline);
   padding-bottom: 1em;
   gap: 8px;
-}
 
-.setup-group__icon {
-  img {
-    width: 20px;
-    height: 20px;
+  &__icon {
+    img {
+      width: 20px;
+      height: 20px;
+    }
   }
-}
 
-.setup-group__content {
-  @include flex-center(null, null, column);
+  &__content {
+    @include flex-box(null, null, column);
 
-  h2 {
-    margin-bottom: 0.5em;
-    font-family: "almarai";
+    h2 {
+      margin-bottom: 0.5em;
+      font-family: "almarai";
+    }
   }
-}
-
-.setup-screen__dp-flex {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5em;
-}
-
-.setup-screen__theme-preview {
-  min-width: 280px;
-}
-
-.setup-screen__theme-preview-card {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.setup-screen__theme-preview-image {
-  width: 80%;
-}
-
-.setup-screen__summary {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.setup-screen__summary-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f6f6f6;
-  font-family: "almarai", sans-serif;
-  min-width: 30em;
 }
 
 .setup-option {
