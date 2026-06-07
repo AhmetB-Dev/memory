@@ -1,37 +1,40 @@
+@mixin flex-center($justify: center, $align: center, $direction: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
 .setup-screen {
   padding: 0 6em;
-}
 
-.setup-screen__content {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: flex-end;
-}
-
-.setup-screen__layout {
-  display: flex;
-  flex-direction: column;
-}
-
-.setup-screen__header {
-  h1 {
-    margin: 0;
-    font-size: clamp(2rem, 4vh, 7rem);
-    font-family: "redRose";
+  &__header {
+    img {
+      position: relative;
+      right: 1em;
+      width: 10.5em;
+    }
   }
 
-  img {
-    position: relative;
-    right: 1em;
-    width: 10.5em;
+  &__title {
+    font-family: "redRose";
+    font-size: clamp(2rem, 4vh, 6rem);
+    margin: 0;
+  }
+
+  &__content {
+    @include flex-center(space-evenly, flex-end);
+  }
+
+  &__layout {
+    @include flex-center(null, null, column);
   }
 }
 
 .setup-group {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+  @include flex-center(null, baseline);
   padding-bottom: 1em;
+  gap: 8px;
 }
 
 .setup-group__icon {
@@ -42,8 +45,7 @@
 }
 
 .setup-group__content {
-  display: flex;
-  flex-direction: column;
+  @include flex-center(null, null, column);
 
   h2 {
     margin-bottom: 0.5em;

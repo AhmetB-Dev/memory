@@ -1,9 +1,13 @@
-.home-screen {
-  height: 100vh;
+@mixin flex-center($direction: row) {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: $direction;
+}
+
+.home-screen {
+  @include flex-center(column);
+  height: 100vh;
   gap: 4em;
 
   background-color: #2f3131;
@@ -34,9 +38,7 @@
 }
 
 .home-screen__play-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   gap: 1.2rem;
 
   padding: 1rem;
@@ -72,7 +74,6 @@
 .home-screen__arrow-bg {
   width: 2rem;
   height: 3rem;
-  display: inline-block;
 
   background-image: url("/assets/images/base/arrow-right.svg");
   background-repeat: no-repeat;
